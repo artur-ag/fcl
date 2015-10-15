@@ -41,6 +41,9 @@
 #include <boost/math/constants/constants.hpp>
 #include <vector>
 
+#include "fcl/shape/SuperOvoid.h"
+#include "fcl/shape/SuperOvoidDetails.h"
+
 namespace fcl
 {
 
@@ -2589,6 +2592,27 @@ bool planeIntersect(const Plane& s1, const Transform3f& tf1,
 // | triangle   |/////|////////|/////////|//////|//////////|///////|////////////|          |
 // +------------+-----+--------+---------+------+----------+-------+------------+----------+
 
+
+template<>
+bool GJKSolver_libccd::shapeIntersect<SuperOvoid, SuperOvoid>(const SuperOvoid &s1, const Transform3f& tf1,
+                                                              const SuperOvoid &s2, const Transform3f& tf2,
+                                                              Vec3f* contact_points, FCL_REAL* penetration_depth, Vec3f* normal) const
+{
+    FCL_REAL distance; // If the superovoids intersect, this will be negative, but penetration_depth is positive
+    Vec3f p1, p2;
+    
+    bool intersect = !details::superOvoidSuperOvoidDistance(s1, tf1, s2, tf2, &distance, &p1, &p2, true, NULL);
+    
+    if (contact_points)
+        *contact_points = (p1 + p2) / 2;
+    if (penetration_depth)
+        *penetration_depth = -distance;
+    if (normal)
+        *normal = (p2 - p1).normalize();
+
+    return intersect;
+}
+
 template<>
 bool GJKSolver_libccd::shapeIntersect<Sphere, Capsule>(const Sphere &s1, const Transform3f& tf1,
                                                        const Capsule &s2, const Transform3f& tf2,
@@ -2899,6 +2923,14 @@ bool GJKSolver_libccd::shapeTriangleIntersect(const Plane& s, const Transform3f&
 // +------------+-----+--------+---------+------+----------+-------+------------+----------+
 // | triangle   |/////|////////|/////////|//////|//////////|///////|////////////|          |
 // +------------+-----+--------+---------+------+----------+-------+------------+----------+
+
+template<>
+bool GJKSolver_libccd::shapeDistance<SuperOvoid, SuperOvoid>(const SuperOvoid& s1, const Transform3f& tf1,
+                                                             const SuperOvoid& s2, const Transform3f& tf2,
+                                                             FCL_REAL* dist, Vec3f* p1, Vec3f* p2) const
+{
+  return details::superOvoidSuperOvoidDistance(s1, tf1, s2, tf2, dist, p1, p2, false, NULL);
+}
 
 template<>
 bool GJKSolver_libccd::shapeDistance<Sphere, Capsule>(const Sphere& s1, const Transform3f& tf1,
@@ -3283,6 +3315,14 @@ bool GJKSolver_indep::shapeTriangleIntersect(const Plane& s, const Transform3f& 
 // +------------+-----+--------+---------+------+----------+-------+------------+----------+
 // | triangle   |/////|////////|/////////|//////|//////////|///////|////////////|          |
 // +------------+-----+--------+---------+------+----------+-------+------------+----------+
+
+template<>
+bool GJKSolver_indep::shapeDistance<SuperOvoid, SuperOvoid>(const SuperOvoid& s1, const Transform3f& tf1,
+                                                            const SuperOvoid& s2, const Transform3f& tf2,
+                                                            FCL_REAL* dist, Vec3f* p1, Vec3f* p2) const
+{
+  return details::superOvoidSuperOvoidDistance(s1, tf1, s2, tf2, dist, p1, p2, false, NULL);
+}
 
 template<>
 bool GJKSolver_indep::shapeDistance<Sphere, Capsule>(const Sphere& s1, const Transform3f& tf1,

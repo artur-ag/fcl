@@ -273,6 +273,23 @@ void computeBV<AABB, Sphere>(const Sphere& s, const Transform3f& tf, AABB& bv)
 }
 
 template<>
+void computeBV<AABB, SuperOvoid>(const SuperOvoid& s, const Transform3f& tf, AABB& bv)
+{
+    std::cout << "computeBV<AABB, SuperOvoid>" << std::endl;
+
+    const Vec3f& T = tf.getTranslation();
+    
+    // TODO get tighter fit
+    FCL_REAL radius = s.a1;
+    if (s.a2 > radius) radius = s.a2;
+    if (s.a3 > radius) radius = s.a3;
+
+    Vec3f v_delta(radius);
+    bv.max_ = T + v_delta;
+    bv.min_ = T - v_delta;
+}
+
+template<>
 void computeBV<AABB, Capsule>(const Capsule& s, const Transform3f& tf, AABB& bv)
 {
   const Matrix3f& R = tf.getRotation();

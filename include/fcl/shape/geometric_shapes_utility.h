@@ -41,6 +41,7 @@
 
 #include <vector>
 #include "fcl/shape/geometric_shapes.h"
+#include "fcl/shape/SuperOvoid.h"
 #include "fcl/BV/BV.h"
 
 namespace fcl
@@ -74,6 +75,9 @@ void computeBV<AABB, Box>(const Box& s, const Transform3f& tf, AABB& bv);
 
 template<>
 void computeBV<AABB, Sphere>(const Sphere& s, const Transform3f& tf, AABB& bv);
+
+template<>
+void computeBV<AABB, SuperOvoid>(const SuperOvoid& s, const Transform3f& tf, AABB& bv);
 
 template<>
 void computeBV<AABB, Capsule>(const Capsule& s, const Transform3f& tf, AABB& bv);

@@ -40,6 +40,7 @@ add_fcl_test(test_fcl_bvh_models test_fcl_bvh_models.cpp test_fcl_utility.cpp)
 
 if (FCL_HAVE_OCTOMAP)
   add_fcl_test(test_fcl_octomap test_fcl_octomap.cpp test_fcl_utility.cpp)
+  add_fcl_test(test_fcl_superovoid test_fcl_superovoid.cpp)
 endif()
 
 #if (FCL_HAVE_TINYXML)

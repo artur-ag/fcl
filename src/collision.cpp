@@ -92,7 +92,7 @@ std::size_t collide(const CollisionGeometry* o1, const Transform3f& tf1,
     {  
       if(!looktable.collision_matrix[node_type2][node_type1])
       {
-        std::cerr << "Warning: collision function between node type " << node_type1 << " and node type " << node_type2 << " is not supported"<< std::endl;
+        //std::cerr << "Warning: collision function between node type " << node_type1 << " and node type " << node_type2 << " is not supported"<< std::endl;
         res = 0;
       }
       else
@@ -102,7 +102,7 @@ std::size_t collide(const CollisionGeometry* o1, const Transform3f& tf1,
     {
       if(!looktable.collision_matrix[node_type1][node_type2])
       {
-        std::cerr << "Warning: collision function between node type " << node_type1 << " and node type " << node_type2 << " is not supported"<< std::endl;
+        //std::cerr << "Warning: collision function between node type " << node_type1 << " and node type " << node_type2 << " is not supported"<< std::endl;
         res = 0;
       }
       else

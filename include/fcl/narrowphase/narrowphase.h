@@ -41,7 +41,7 @@
 #include "fcl/narrowphase/gjk.h"
 #include "fcl/narrowphase/gjk_libccd.h"
 
-
+#include "fcl/shape/SuperOvoid.h"
 
 namespace fcl
 {
@@ -125,8 +125,8 @@ struct GJKSolver_libccd
                                      max_distance_iterations, distance_tolerance,
                                      dist, p1, p2);
 
-    if(p1) *p1 = inverse(tf1).transform(*p1);
-    if(p2) *p2 = inverse(tf2).transform(*p2);
+    //if(p1) *p1 = inverse(tf1).transform(*p1);
+    //if(p2) *p2 = inverse(tf2).transform(*p2);
 
     details::GJKInitializer<S1>::deleteGJKObject(o1);
     details::GJKInitializer<S2>::deleteGJKObject(o2);
@@ -243,6 +243,10 @@ struct GJKSolver_libccd
 
 };
 
+template<>
+bool GJKSolver_libccd::shapeIntersect<SuperOvoid, SuperOvoid>(const SuperOvoid &s1, const Transform3f& tf1,
+                                                              const SuperOvoid &s2, const Transform3f& tf2,
+                                                              Vec3f* contact_points, FCL_REAL* penetration_depth, Vec3f* normal) const;
 
 /// @brief Fast implementation for sphere-capsule collision
 template<>
@@ -406,12 +410,15 @@ template<>
 bool GJKSolver_libccd::shapeTriangleIntersect(const Plane& s, const Transform3f& tf1,
                                               const Vec3f& P1, const Vec3f& P2, const Vec3f& P3, const Transform3f& tf2, Vec3f* contact_points, FCL_REAL* penetration_depth, Vec3f* normal) const;
 
-/// @brief Fast implementation for sphere-capsule distance
+template<>
+bool GJKSolver_libccd::shapeDistance<SuperOvoid, SuperOvoid>(const SuperOvoid& s1, const Transform3f& tf1, const SuperOvoid& s2, const Transform3f& tf2, FCL_REAL* dist, Vec3f* p1, Vec3f* p2) const;
+
 template<>
 bool GJKSolver_libccd::shapeDistance<Sphere, Capsule>(const Sphere& s1, const Transform3f& tf1,
                                                       const Capsule& s2, const Transform3f& tf2,
                                                       FCL_REAL* dist, Vec3f* p1, Vec3f* p2) const;
 
+/// @brief Fast implementation for sphere-capsule distance
 template<>
 bool GJKSolver_libccd::shapeDistance<Capsule, Sphere>(const Capsule& s1, const Transform3f& tf1,
                                                       const Sphere& s2, const Transform3f& tf2,
@@ -954,6 +961,9 @@ bool GJKSolver_indep::shapeTriangleIntersect(const Halfspace& s, const Transform
 template<>
 bool GJKSolver_indep::shapeTriangleIntersect(const Plane& s, const Transform3f& tf1,
                                              const Vec3f& P1, const Vec3f& P2, const Vec3f& P3, const Transform3f& tf2, Vec3f* contact_points, FCL_REAL* penetration_depth, Vec3f* normal) const;
+
+template<>
+bool GJKSolver_indep::shapeDistance<SuperOvoid, SuperOvoid>(const SuperOvoid& s1, const Transform3f& tf1, const SuperOvoid& s2, const Transform3f& tf2, FCL_REAL* dist, Vec3f* p1, Vec3f* p2) const;
 
 /// @brief Fast implementation for sphere-capsule distance
 template<>

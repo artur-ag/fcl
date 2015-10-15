@@ -107,6 +107,16 @@ add_definitions(-DBOOST_TEST_DYN_LINK)
 include_directories(BEFORE "include")
 include_directories("${CMAKE_CURRENT_BINARY_DIR}/include")
 
+# Find LAPACKE library
+find_package(LAPACKE)
+
+if (NOT LAPACKE_FOUND)
+  message(FATAL_ERROR "LAPACKE is required by FCL (SuperOvoids)")
+endif()
+set(LAPACK_LIBRARIES "lapacke")
+include_directories(${LAPACKE_INCLUDE_DIRS})
+link_directories(${LAPACKE_LIBRARY_DIRS})
+
 if(PKG_CONFIG_FOUND)
   pkg_check_modules(CCD ccd)
   # check to see if the pkg is installed under the libccd name

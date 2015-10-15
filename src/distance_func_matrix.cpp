@@ -41,6 +41,8 @@
 #include "fcl/traversal/traversal_node_setup.h"
 #include "fcl/narrowphase/narrowphase.h"
 
+#include "fcl/shape/SuperOvoid.h"
+
 namespace fcl
 {
 
@@ -312,6 +314,8 @@ DistanceFunctionMatrix<NarrowPhaseSolver>::DistanceFunctionMatrix()
   distance_matrix[GEOM_SPHERE][GEOM_CONVEX] = &ShapeShapeDistance<Sphere, Convex, NarrowPhaseSolver>;
   distance_matrix[GEOM_SPHERE][GEOM_PLANE] = &ShapeShapeDistance<Sphere, Plane, NarrowPhaseSolver>;
   distance_matrix[GEOM_SPHERE][GEOM_HALFSPACE] = &ShapeShapeDistance<Sphere, Halfspace, NarrowPhaseSolver>;
+
+  distance_matrix[GEOM_SUPEROVOID][GEOM_SUPEROVOID] = &ShapeShapeDistance<SuperOvoid, SuperOvoid, NarrowPhaseSolver>;
 
   distance_matrix[GEOM_CAPSULE][GEOM_BOX] = &ShapeShapeDistance<Capsule, Box, NarrowPhaseSolver>;
   distance_matrix[GEOM_CAPSULE][GEOM_SPHERE] = &ShapeShapeDistance<Capsule, Sphere, NarrowPhaseSolver>;

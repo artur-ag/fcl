@@ -42,6 +42,7 @@
 #include "fcl/collision_node.h"
 #include "fcl/narrowphase/narrowphase.h"
 
+#include "fcl/shape/SuperOvoid.h"
 
 namespace fcl
 {
@@ -470,6 +471,8 @@ CollisionFunctionMatrix<NarrowPhaseSolver>::CollisionFunctionMatrix()
   collision_matrix[GEOM_SPHERE][GEOM_CONVEX] = &ShapeShapeCollide<Sphere, Convex, NarrowPhaseSolver>;
   collision_matrix[GEOM_SPHERE][GEOM_PLANE] = &ShapeShapeCollide<Sphere, Plane, NarrowPhaseSolver>;
   collision_matrix[GEOM_SPHERE][GEOM_HALFSPACE] = &ShapeShapeCollide<Sphere, Halfspace, NarrowPhaseSolver>;
+  
+  collision_matrix[GEOM_SUPEROVOID][GEOM_SUPEROVOID] = &ShapeShapeCollide<SuperOvoid, SuperOvoid, NarrowPhaseSolver>;
 
   collision_matrix[GEOM_CAPSULE][GEOM_BOX] = &ShapeShapeCollide<Capsule, Box, NarrowPhaseSolver>;
   collision_matrix[GEOM_CAPSULE][GEOM_SPHERE] = &ShapeShapeCollide<Capsule, Sphere, NarrowPhaseSolver>;
