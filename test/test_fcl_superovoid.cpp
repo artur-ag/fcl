@@ -9,6 +9,7 @@
 #include "fcl/shape/geometric_shapes.h"
 #include "fcl/shape/SuperOvoid.h"
 #include "fcl/shape/SuperOvoidDetails.h"
+#include "fcl/MuboPoseGenerator.h"
 
 using namespace fcl;
 
@@ -1008,4 +1009,174 @@ BOOST_AUTO_TEST_CASE(mesh_vs_unity)
 	}
 
 	delete unityVertices;
+}
+
+
+
+
+
+
+bool isGuessEqual(NewtonRaphsonStats stats1, NewtonRaphsonStats stats2)
+{
+	return
+		stats1.getGuessA().equal(stats2.getGuessA(), 1e-12)
+		&& stats1.getGuessB().equal(stats2.getGuessB(), 1e-12);
+}
+
+void writeNearestPoints(std::ostream& file, const DistanceResult& result)
+{
+	file << "," << result.nearest_points[0] << "," << result.nearest_points[1];
+}
+
+// Testing the implicit and parametric versions,
+// starting from the same initial guess, obtained
+// with the ParametricQuadtree method
+BOOST_AUTO_TEST_CASE(mubo_implicit_vs_parametric_same_guess)
+{
+	std::ofstream fileParametric;
+	fileParametric.open("mubo_parametric.csv");
+	std::ofstream fileHybrid;
+	fileHybrid.open("mubo_hybrid.csv");
+	std::ofstream fileImplicit;
+	fileImplicit.open("mubo_implicit.csv");
+	std::ofstream fileMesh;
+	fileMesh.open("mubo_mesh.csv");
+
+	// Write info
+#ifdef _WIN32
+	char osName[32] = "Windows 32-bit";
+#elif _WIN64
+	char osName[32] = "Windows 64-bit";
+#elif __linux__
+	char osName[32] = "Linux";
+#else
+	char osName[32] = "Unknown OS";
+#endif
+
+	fileParametric << osName << std::endl;
+	fileHybrid << osName << std::endl;
+	fileImplicit << osName << std::endl;
+	fileMesh << osName << std::endl;
+
+	// Write header
+	fileParametric << "iteration,";
+	fileHybrid << "iteration,";
+	fileImplicit << "iteration,";
+	fileMesh << "iteration,";
+	NewtonRaphsonStats::printHeader(fileParametric);
+	NewtonRaphsonStats::printHeader(fileHybrid);
+	NewtonRaphsonStats::printHeader(fileImplicit);
+	fileMesh << "totalTime";
+	
+	char extras[10] = ",P,Q";
+	fileParametric << extras << std::endl;
+	fileHybrid << extras << std::endl;
+	fileImplicit << extras << std::endl;
+	fileMesh << extras << std::endl;
+
+	// Superovoid stuff
+	SuperOvoid sov1(1.4, 0.96, 1.2, 0.7, 0.5, 0.2, 0.3);
+	SuperOvoid sov2(1.1, 1.2, 1.0, 0.4, 1.1, 0.253, 0.243);
+
+	// Create superovoid objects, which are always the same
+	CollisionObject* s1 = getSuperOvoidObject(&sov1);
+	CollisionObject* s2 = getSuperOvoidObject(&sov2);
+
+	int azSlices = 16;
+	int zeSlices = 21;
+
+	s1->setTranslation(Vec3f());
+	s2->setTranslation(Vec3f(4, 0, 0));
+
+	MuboPoseGenerator rand = MuboPoseGenerator();
+	rand.setSeed(1337);
+
+	for (int i = 0; i < 10000; i++)
+	{
+		rand.randomizeSuperovoid(sov1);
+		rand.randomizeSuperovoid(sov2);
+		rand.setRandomRotation(s1);
+		rand.setRandomRotation(s2);
+
+		// Create meshes equivalent to superovoids
+		CollisionObject* mesh1 = getSuperOvoidMeshObject(sov1, azSlices, zeSlices, true);
+		CollisionObject* mesh2 = getSuperOvoidMeshObject(sov2, azSlices, zeSlices, true);
+		mesh1->setTranslation(Vec3f());
+		mesh2->setTranslation(Vec3f(4, 0, 0));
+		mesh1->setQuatRotation(s1->getQuatRotation());
+		mesh2->setQuatRotation(s2->getQuatRotation());
+			
+		g_lastStats.resetToDefault();
+		g_lastStatsValid = true;
+
+		// Use the same initial guess for both experiments
+		g_lastStats.guessType = NewtonRaphsonStats::PARAMETRIC_QUADTREE;
+
+		DistanceRequest request;
+		DistanceResult parametricResult, hybridResult, implicitResult, meshResult;
+		NewtonRaphsonStats parametricStats, hybridStats, implicitStats;
+
+		// Experiment 1: parametric numerical
+		sov1.clearCachedPoints();
+		sov2.clearCachedPoints();
+		request = DistanceRequest(true);
+		g_lastStats.parametric = true;
+		g_lastStats.forceImplicitNormals = false;
+		distance(s1, s2, request, parametricResult);
+		parametricStats = g_lastStats;
+
+		// Experiment 2: hybrid (parametric with implicit normals)
+		sov1.clearCachedPoints();
+		sov2.clearCachedPoints();
+		request = DistanceRequest(true);
+		g_lastStats.parametric = true;
+		g_lastStats.forceImplicitNormals = true;
+		distance(s1, s2, request, hybridResult);
+		hybridStats = g_lastStats;
+
+		// Experiment 3: implicit numerical
+		sov1.clearCachedPoints();
+		sov2.clearCachedPoints();
+		request = DistanceRequest(true);
+		g_lastStats.parametric = false;
+		g_lastStats.forceImplicitNormals = false;
+		distance(s1, s2, request, implicitResult);
+		implicitStats = g_lastStats;
+
+		Timer meshTimer = Timer();
+		meshTimer.start();
+		// Experiment 4: meshes
+		request = DistanceRequest(true);
+		distance(mesh1, mesh2, request, meshResult);
+		meshTimer.stop();
+
+		delete mesh1;
+		delete mesh2;
+
+		// Write results
+		fileImplicit << i << "," << implicitStats;
+		fileParametric << i << "," << parametricStats;
+		fileHybrid << i << "," << hybridStats;
+		fileMesh << i << "," << meshTimer.getElapsedTimeInMicroSec();
+
+		// Write closest points
+		writeNearestPoints(fileImplicit, implicitResult);
+		writeNearestPoints(fileParametric, parametricResult);
+		writeNearestPoints(fileHybrid, hybridResult);
+		writeNearestPoints(fileMesh, meshResult);
+
+		// End line
+		fileImplicit   << std::endl;
+		fileParametric << std::endl;
+		fileHybrid     << std::endl;
+		fileMesh       << std::endl;
+
+		//BOOST_CHECK(isGuessEqual(parametricStats, implicitStats));
+		//BOOST_CHECK(std::abs(parametricResult.min_distance - implicitResult.min_distance) < 1e-4);
+	}
+
+	fileParametric.close();
+	fileHybrid.close();
+	fileImplicit.close();
+	fileMesh.close();
 }

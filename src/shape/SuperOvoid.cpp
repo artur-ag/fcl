@@ -15,6 +15,7 @@
 #include "fcl/BV/BV.h"
 #include "fcl/BV/OBBRSS.h"
 #include "fcl/shape/SuperOvoid.h"
+#include "fcl/shape/SuperOvoidDetails.h"
 
 #include "fcl/SuperOvoid_global.h" // For NewtonRaphsonStats and timers
 
@@ -65,21 +66,16 @@ namespace fcl
         void computeTangentsWithHouseholder(const Vec3f normal, Vec3f* out_householder, Vec3f* out_tangent, Vec3f* out_binormal);
         void evaluateGeometricConstraintsImplicit(const SuperOvoid& s1, const Transform3f& tf1, const SuperOvoid& s2, const Transform3f& tf2, FCL_REAL qk[6], FCL_REAL phi[6]);
         void evaluateGeometricConstraintsParametric(const SuperOvoid& s1, const Transform3f& tf1, const SuperOvoid& s2, const Transform3f& tf2, FCL_REAL qk[4], FCL_REAL phi[4]);
-        void evaluateGeometricConstraintsDistanceNormalThing(const SuperOvoid& s1, const Transform3f& tf1, const SuperOvoid& s2, const Transform3f& tf2, FCL_REAL* qk, FCL_REAL phi[6]);
         bool solveNewtonRaphson(int size, FCL_REAL tolerance, int maxIterations, const SuperOvoid& s1, const Transform3f& tf1, const SuperOvoid& s2, const Transform3f& tf2, void(*function)(const SuperOvoid& s1, const Transform3f& tf1, const SuperOvoid& s2, const Transform3f& tf2, FCL_REAL* qk, FCL_REAL phi[6]), FCL_REAL* guess, NewtonRaphsonStats* stats);
         bool isMinimumDistance(const SuperOvoid& s1, const Transform3f& t1, const SuperOvoid& s2, const Transform3f& t2, const double* qk, bool parametric);
 
-        /// @brief Returns true if any of the cells in a vector is NaN.
-        bool isNaN(FCL_REAL* vector, int size)
-        {
-            for (int i = 0; i < size; i++)
-                if (std::isnan(vector[i]))
-                    return true;
-
-            return false;
-        }
-
-
+		bool isNaN(FCL_REAL* vector, int size)
+		{
+			for (int i = 0; i < size; i++)
+				if (std::isnan(vector[i]))
+					return true;
+			return false;
+		}
 
         /// @brief Computes the distance between two Superovoids
         /// Returns true if the superovoids are separated. Otherwise, returns false.
@@ -193,7 +189,7 @@ namespace fcl
             {
                 if (!useCachedGuesses)
                 {
-                    getParametricInitialGuess(s1, tf1, s2, tf2, qk, stats, useParametric);
+					getInitialGuess(s1, tf1, s2, tf2, qk, stats, useParametric);
                 }
                 else // if (useCachedGuesses)
                 {
@@ -394,32 +390,23 @@ namespace fcl
                 // Calculate Jacobian matrix numerically
                 Timer jacobianTimer = Timer();
                 jacobianTimer.start();
-                for (int i = 0; i < size * size; i++)
-                    jacobian[i] = 0;
-                FCL_REAL perturb = 1e-6;
 
-                for (int col = 0; col < size; col++)
-                {
-                    for (int i = 0; i < size; i++)
-                        qkPerturb[i] = qk[i];
-                    qkPerturb[col] = qkPerturb[col] + perturb;
-                    function(s1, tf1, s2, tf2, qkPerturb, phiPerturb);
+				bool validJacobian;
 
-                    for (int i = 0; i < size; i++)
-                    {
-                        jacobian[col * size + i] = (phiPerturb[i] - phi[i]) / perturb;
-                    }
-                }
-
-                if (isNaN(jacobian, size * size))
-                {
-                    converged = false;
-                    break;
-                }
+				if (size == 4 && stats->analytical == true)
+					validJacobian = getAnalyticalParametricJacobian(s1, tf1, s2, tf2, qk, jacobian);
+				else
+					validJacobian = getNumericalJacobian(size, s1, tf1, s2, tf2, function, qk, jacobian);
 
                 jacobianTimer.stop();
                 if (stats != NULL)
                     stats->numericalJacobianTime += jacobianTimer.getElapsedTimeInMicroSec();
+
+				if (!validJacobian)
+				{
+					converged = false;
+					break;
+				}
 
                 // Debug
 #if FCL_SUPEROVOID_DEBUG_LOG > 1
@@ -534,90 +521,6 @@ namespace fcl
             phi[1] = n_OP.dot(b_OQ);
             phi[2] = d_PQ.dot(t_OQ);
             phi[3] = d_PQ.dot(b_OQ);
-            phi[4] = F_i;
-            phi[5] = F_j;
-
-#if FCL_SUPEROVOID_DEBUG_LOG > 3
-            std::cout << "F_i " << F_i << "\n";
-            std::cout << "F_j " << F_j << "\n";
-            std::cout << "\n";
-
-            std::cout << "n_iP " << n_iP << "\n";
-            std::cout << "n_jQ " << n_jQ << "\n";
-            std::cout << "\n";
-
-            std::cout << "v_jQ " << v_jQ << "\n";
-            std::cout << "t_jQ " << t_jQ << "\n";
-            std::cout << "b_jQ " << b_jQ << "\n";
-            std::cout << "\n";
-
-            std::cout << "n_OP " << n_OP << "\n";
-            std::cout << "n_OQ " << n_OQ << "\n";
-            std::cout << "v_OQ " << v_OQ << "\n";
-            std::cout << "t_OQ " << t_OQ << "\n";
-            std::cout << "b_OQ " << b_OQ << "\n";
-            std::cout << "\n";
-
-            std::cout << "r_OP " << r_OP << "\n";
-            std::cout << "r_OQ " << r_OQ << "\n";
-            std::cout << "d_PQ " << d_PQ << "\n";
-            std::cout << "\n";
-
-            std::cout << "phi1 " << phi[0] << "\n";
-            std::cout << "phi2 " << phi[1] << "\n";
-            std::cout << "phi3 " << phi[2] << "\n";
-            std::cout << "phi4 " << phi[3] << "\n";
-            std::cout << "phi5 " << phi[4] << "\n";
-            std::cout << "phi6 " << phi[5] << "\n";
-            std::cout << "\n";
-#endif
-        }
-
-        // Prepare the system of geometric constraints that express the common normal concept.
-        // TODO test this
-        void evaluateGeometricConstraintsDistanceNormalThing(
-            const SuperOvoid& s1, const Transform3f& tf1,
-            const SuperOvoid& s2, const Transform3f& tf2,
-            FCL_REAL* qk,
-            FCL_REAL phi[6])
-        {
-            // In local coordinates relative to each superovoid
-            Vec3f s_iP(qk[0], qk[1], qk[2]);
-            Vec3f s_jQ(qk[3], qk[4], qk[5]);
-
-            // Implicit function value for each superovoid
-            FCL_REAL F_i = s1.implicitFunction(s_iP);
-            FCL_REAL F_j = s2.implicitFunction(s_jQ);
-
-            // Normal vector in local coordinates
-            Vec3f n_iP = s1.getNormal(s_iP);
-            Vec3f n_jQ = s2.getNormal(s_jQ);
-
-            // Tangent vectors in local coordinates
-            Vec3f v_jQ;
-            Vec3f t_jQ;
-            Vec3f b_jQ;
-            computeTangentsWithHouseholder(n_jQ, &v_jQ, &t_jQ, &b_jQ);
-
-            // Above vectors expressed in global coordinates
-            Quaternion3f tf1Rotation = tf1.getQuatRotation();
-            Quaternion3f tf2Rotation = tf2.getQuatRotation();
-
-            Vec3f n_OP = tf1Rotation.transform(n_iP);
-            Vec3f n_OQ = tf2Rotation.transform(n_jQ);
-            // Vec3f v_OQ = tf2Rotation.transform(v_jQ);
-            Vec3f t_OQ = tf2Rotation.transform(t_jQ);
-            Vec3f b_OQ = tf2Rotation.transform(b_jQ);
-
-            Vec3f r_OP = tf1.transform(s_iP);
-            Vec3f r_OQ = tf2.transform(s_jQ);
-            Vec3f d_PQ = (r_OQ - r_OP).normalize();
-
-            // Non-linear vector column Phi = Phi(q), with q = [s_iP; s_jQ], containing the geometric constraints
-            phi[0] = n_OP.dot(t_OQ);
-            phi[1] = n_OP.dot(b_OQ);
-            phi[2] = d_PQ.dot(n_OP) - 1;
-            phi[3] = d_PQ.dot(n_OQ) + 1;
             phi[4] = F_i;
             phi[5] = F_j;
 
@@ -1224,121 +1127,6 @@ namespace fcl
                 stats->initialGuessTime = timer.getElapsedTimeInMicroSec();
             }
         }
-
-
-
-
-
-
-
-        // UNUSED
-
-        //// Superovoid Tree initial guess estimation
-        //void getTreeInitialGuess(
-        //	const SuperOvoid& s1, const Transform3f& tf1,
-        //	const SuperOvoid& s2, const Transform3f& tf2,
-        //	FCL_REAL qk[6],
-        //	NewtonRaphsonStats* stats)
-        //{
-        //	Timer timer = Timer();
-        //	timer.start();
-
-        //          AABB box1 = s1.aabb_local;
-        //          AABB box2 = s2.aabb_local;
-
-        //	const int iterations = 5;
-        //	for (int i = 0; i < iterations; i++)
-        //	{
-
-        //	}
-
-
-        //	// Keep track of time and write it to stats struct, if it exists
-        //	timer.stop();
-
-        //	if (stats != NULL)
-        //	{
-        //		for (int i = 0; i < 3; i++)
-        //		{
-        //			//stats->guessA[i] = p1[i];
-        //			//stats->guessB[i] = p2[i];
-        //		}
-
-        //		stats->initialGuessTime = timer.getElapsedTimeInMicroSec();
-        //	}
-        //}
-
-        // enum CORNER { BLD, BLU, BRD, BRU, FLD, FLU, FRD, FRU };
-
-        //AABB getOctreeChild(AABB parent, CORNER corner)
-        //{
-        //	// An octree child has three common planes with its parent (one common corner)
-        //	Vec3f min = parent.min_;
-        //	Vec3f max = parent.max_;
-
-        //	// In each dimension, the child will either inherit the min or the max coordinate of the parent
-        //	bool xMax = ((int)corner & 0x01) != 0;
-        //	bool yMax = ((int)corner & 0x02) != 0;
-        //	bool zMax = ((int)corner & 0x04) != 0;
-        //	bool maxes[] = { xMax, yMax, zMax };
-
-        //	// For each dimension X,Y,Z
-        //	for (int i = 0; i < 3; i++)
-        //	{
-        //		// If it inherits the 'max' coordinate, the min must increase
-        //		if (maxes[i])
-        //			min[i] = (min[i] + max[i]) / 2;
-        //		// If it inherits the 'min' coordinate, the max decreases instead
-        //		else
-        //			max[i] = (min[i] + max[i]) / 2;
-        //	}
-
-        //	return AABB(min, max);
-        //}
-
-        //// Gets the explicit coordinates of a corner of an AABB
-        //Vec3f getAABBCorner(AABB box, CORNER corner)
-        //{
-        //	Vec3f cornerPoint;
-
-        //	bool xMax = ((int)corner & 0x01) != 0;
-        //	bool yMax = ((int)corner & 0x02) != 0;
-        //	bool zMax = ((int)corner & 0x04) != 0;
-        //	bool maxes[] = { xMax, yMax, zMax };
-
-        //	for (int i = 0; i < 3; i++)
-        //		cornerPoint[i] = (maxes[i] ? box.min_[i] : box.max_[i]);
-
-        //	return cornerPoint;
-        //}
-
-        //// Gets the closest pair of points, between two AABBs' corners
-        //void getClosestPoints(AABB boxA, AABB boxB, int* outIndex1, int* outIndex2)
-        //{
-        //	int p1index = 0, p2index = 0;
-        //	FCL_REAL sqrMinDistance = (boxA.min_ - boxB.min_).sqrLength();
-
-        //	for (int a = 0; a < 8; a++)
-        //	{
-        //		for (int b = 0; b < 8; b++)
-        //		{
-        //			Vec3f cornerA = getAABBCorner(boxA, (CORNER)a);
-        //			Vec3f cornerB = getAABBCorner(boxB, (CORNER)b);
-
-        //			FCL_REAL dist = (cornerA - cornerB).sqrLength();
-
-        //			if (dist < sqrMinDistance)
-        //			{
-        //				sqrMinDistance = dist;
-        //				p1index = a;
-        //				p2index = b;
-        //			}
-        //		}
-        //	}
-
-        //	*outIndex1 = p1index;
-        //	*outIndex2 = p2index;
-        //}
     }
 
 
@@ -1391,4 +1179,329 @@ namespace fcl
 
         return out;
     }
+
+
+
+
+
+
+	// Previously on SuperOvoid.h
+
+	/// @brief Evaluate implicit function at a given point, in local coordinates.  This returns 0 for points on the surface, >0 for points outside, <0 for points inside.
+	inline FCL_REAL SuperOvoid::implicitFunction(Vec3f point) const
+	{
+		return implicitFunction(point[0], point[1], point[2]);
+	}
+
+	/// @brief Evaluate implicit function at a given point, in local coordinates.  This returns 0 for points on the surface, >0 for points outside, <0 for points inside.
+	FCL_REAL SuperOvoid::implicitFunction(FCL_REAL x, FCL_REAL y, FCL_REAL z) const
+	{
+		x = x / a1;
+		y = y / a2;
+		z = z / a3;
+
+		if (_isOvoid)
+			return
+			pow(
+			(pow(std::abs(x / (taperingX * z + 1)), 2 / epsilon1)
+			+ pow(std::abs(y / (taperingY * z + 1)), 2 / epsilon1)),
+			epsilon1 / epsilon2)
+			+ pow(std::abs(z), 2 / epsilon2)
+			- 1;
+		else
+			return
+			pow(
+			(pow(std::abs(x), 2 / epsilon1)
+			+ pow(std::abs(y), 2 / epsilon1)),
+			epsilon1 / epsilon2)
+			+ pow(std::abs(z), 2 / epsilon2)
+			- 1;
+	}
+
+	/// @brief Get local point in Cartesian coordinates with the given parametric coordinates (in radians).
+	void SuperOvoid::getPoint(Vec3f* target, FCL_REAL azimuth, FCL_REAL zenith, bool equallySpaced) const
+	{
+		// Adjust parameters so that vertices are almost equally spaced, it's prettier
+		if (equallySpaced)
+		{
+			azimuth = equallySpacedTransform(azimuth, epsilon1);
+			zenith = equallySpacedTransform(zenith, epsilon2);
+		}
+		if (zenith > (pi / 2))
+			zenith += pi;
+		else if (zenith < (-pi / 2))
+			zenith -= pi;
+
+		FCL_REAL sinA = std::sin(azimuth),
+			sinZ = std::sin(zenith),
+			cosA = std::cos(azimuth),
+			cosZ = std::cos(zenith);
+
+		// Calculate coordinates
+		FCL_REAL z = signpow(sinZ, epsilon2) * a3;
+
+		FCL_REAL taperingFactorX = taperingX * z / a3 + 1;
+		FCL_REAL taperingFactorY = taperingY * z / a3 + 1;
+
+		FCL_REAL x = signpow(cosA, epsilon1)
+			* signpow(cosZ, epsilon2)
+			* taperingFactorX
+			* a1;
+
+		FCL_REAL y = signpow(sinA, epsilon1)
+			* signpow(cosZ, epsilon2)
+			* taperingFactorY
+			* a2;
+
+		target->setValue(x, y, z);
+	}
+
+	/// @brief Get local normal direction at a given point on the surface of the superovoid. Normalized.
+	Vec3f SuperOvoid::getNormal(Vec3f point) const
+	{
+		FCL_REAL x = point[0] / a1;
+		FCL_REAL y = point[1] / a2;
+		FCL_REAL z = point[2] / a3;
+		FCL_REAL absX = std::abs(x);
+		FCL_REAL absY = std::abs(y);
+		FCL_REAL absZ = std::abs(z);
+
+		if (_isOvoid)
+		{
+			FCL_REAL tfx = std::pow(taperingX * z + 1, -2 / epsilon1);
+			FCL_REAL tfy = std::pow(taperingY * z + 1, -2 / epsilon1);
+			FCL_REAL aux = std::pow(
+				tfx * std::pow(absX, 2 / epsilon1)
+				+ tfy * std::pow(absY, 2 / epsilon1),
+				epsilon1 / epsilon2 - 1);
+
+			FCL_REAL nX = tfx * std::pow(absX, 2 / epsilon1 - 1) * aux * SIGN(x);
+			FCL_REAL nY = tfy * std::pow(absY, 2 / epsilon1 - 1) * aux * SIGN(y);
+
+			FCL_REAL dtfx = taperingX * std::pow(taperingX * z + 1, -2 / epsilon1 - 1) * std::pow(absX, 2 / epsilon1);
+			FCL_REAL dtfy = taperingY * std::pow(taperingY * z + 1, -2 / epsilon1 - 1) * std::pow(absY, 2 / epsilon1);
+
+			FCL_REAL nZ = (-dtfx - dtfy) * aux + std::pow(absZ, 2 / epsilon2 - 1) * SIGN(z);
+
+			Vec3f normal = Vec3f(nX / a1, nY / a2, nZ / a3);
+			normal.normalize();
+			return normal;
+		}
+		else
+		{
+			FCL_REAL aux = std::pow(
+				std::pow(absX, 2 / epsilon1)
+				+ std::pow(absY, 2 / epsilon1),
+				epsilon1 / epsilon2 - 1);
+
+			FCL_REAL nX = std::pow(absX, 2 / epsilon1 - 1) * aux * SIGN(x);
+			FCL_REAL nY = std::pow(absY, 2 / epsilon1 - 1) * aux * SIGN(y);
+			FCL_REAL nZ = std::pow(absZ, 2 / epsilon2 - 1) * SIGN(z);
+
+			Vec3f normal = Vec3f(nX / a1, nY / a2, nZ / a3);
+			normal.normalize();
+			return normal;
+		}
+	}
+
+	/// @brief Get local normal direction at a given set of coordinates on the surface of the superovoid (in radians). Normalized.
+	Vec3f SuperOvoid::getNormal(FCL_REAL azimuth, FCL_REAL zenith, bool useEquallySpacedTransform) const
+	{
+		// Adjust parameters so that vertices are almost equally spaced, it's prettier
+		if (useEquallySpacedTransform)
+		{
+			azimuth = equallySpacedTransform(azimuth, epsilon1);
+			zenith = equallySpacedTransform(zenith, epsilon2);
+		}
+		if (zenith > (pi / 2))
+			zenith += pi;
+		else if (zenith < (-pi / 2))
+			zenith -= pi;
+
+		if (_isOvoid)
+		{
+			if (g_lastStatsValid && g_lastStats.forceImplicitNormals)
+			{
+				// This uses the implicit formula
+				Vec3f point;
+				getPoint(&point, azimuth, zenith, false);
+				return getNormal(point);
+			}
+			else
+			{
+				// This is the purely-parametric formula
+				return getAzimuthTangent(azimuth, zenith).cross(getZenithTangent(azimuth, zenith)).normalize();
+			}
+		}
+		else
+		{
+			double cosA = std::cos(azimuth);
+			double sinA = std::sin(azimuth);
+			double cosZ = std::cos(zenith);
+			double sinZ = std::sin(zenith);
+
+			double cosZPowered = SIGN(cosZ) * std::pow(std::abs(cosZ), 2 - epsilon2);
+			double x = SIGN(cosA) * std::pow(std::abs(cosA), 2 - epsilon1) * cosZPowered;
+			double y = SIGN(sinA) * std::pow(std::abs(sinA), 2 - epsilon1) * cosZPowered;
+			double z = SIGN(sinZ) * std::pow(std::abs(sinZ), 2 - epsilon2);
+
+			Vec3f normal = Vec3f(x / a1, y / a2, z / a3);
+			normal.normalize();
+			return normal;
+		}
+	}
+
+	// @brief Get tangent in azimuth direction (tangent)
+	Vec3f SuperOvoid::getAzimuthTangent(FCL_REAL azimuth, FCL_REAL zenith) const
+	{
+		Vec3f point = getPoint(azimuth, zenith, false);
+		FCL_REAL z = point[2];
+
+		FCL_REAL sinA = std::sin(azimuth);
+		FCL_REAL cosA = std::cos(azimuth);
+		FCL_REAL sinZ = std::sin(zenith);
+		FCL_REAL cosZ = std::cos(zenith);
+
+		FCL_REAL dx = a1 * (taperingX * z / a3 + 1) * signpow(cosZ, epsilon2) * (-sinA) * epsilon1 * std::pow(std::abs(cosA), epsilon1 - 1);
+		FCL_REAL dy = a2 * (taperingY * z / a3 + 1) * signpow(cosZ, epsilon2) * (cosA)* epsilon1 * std::pow(std::abs(sinA), epsilon1 - 1);
+		FCL_REAL dz = 0;
+
+		return Vec3f(dx, dy, dz).normalize();
+	}
+
+	// @brief Get tangent in zenith direction (binormal)
+	Vec3f SuperOvoid::getZenithTangent(FCL_REAL azimuth, FCL_REAL zenith) const
+	{
+		Vec3f point = getPoint(azimuth, zenith, false);
+		FCL_REAL z = point[2];
+
+		FCL_REAL sinA = std::sin(azimuth);
+		FCL_REAL cosA = std::cos(azimuth);
+		FCL_REAL sinZ = std::sin(zenith);
+		FCL_REAL cosZ = std::cos(zenith);
+
+		double dz = a3 * (cosZ)* epsilon2 * std::pow(std::abs(sinZ), epsilon2 - 1);
+
+		double dEpsilon2Term = (-sinZ) * epsilon2 * std::pow(std::abs(cosZ), epsilon2 - 1);
+
+		double dx = a1 * (taperingX * z / a3 + 1) * signpow(cosA, epsilon1) * dEpsilon2Term + dz * a1 * (taperingX / a3) * signpow(cosA, epsilon1) * signpow(cosZ, epsilon2);
+		double dy = a2 * (taperingY * z / a3 + 1) * signpow(sinA, epsilon1) * dEpsilon2Term + dz * a2 * (taperingY / a3) * signpow(sinA, epsilon1) * signpow(cosZ, epsilon2);
+
+		return Vec3f(dx, dy, dz).normalize();
+	}
+
+	// @brief dt / dphi1
+	Vec3f SuperOvoid::getAzimuthTangentDerivativePhi1(FCL_REAL phi1, FCL_REAL phi2) const
+	{
+		// DSL notes, page 2 parametric
+		FCL_REAL e1 = epsilon1, e2 = epsilon2, tx = taperingX, ty = taperingY;
+
+		FCL_REAL dtx_dphi1 = a1 * (tx * signpow(sin(phi2), e2) + 1)
+			* signpow(cos(phi2), e2) * e1
+			* (-cos(phi1) * signpow(cos(phi1), e1 - 1)
+			+ (-sin(phi1) * (e1 - 1) * (-sin(phi1)) * signpow(cos(phi1), e1 - 2)));
+
+		FCL_REAL dty_dphi1 = a2 * (ty * signpow(sin(phi2), e2) + 1)
+			* signpow(cos(phi2), e2) * e1
+			* (-sin(phi1) * signpow(sin(phi1), e1 - 1)
+			+ (cos(phi1) * (e1 - 1) * cos(phi1) * signpow(sin(phi1), e1 - 2)));
+
+		return Vec3f(dtx_dphi1, dty_dphi1, 0).normalize();
+	}
+
+	// @brief dt / dphi2
+	Vec3f SuperOvoid::getAzimuthTangentDerivativePhi2(FCL_REAL phi1, FCL_REAL phi2) const
+	{
+		// DSL notes, page 2 parametric
+		FCL_REAL e1 = epsilon1, e2 = epsilon2, tx = taperingX, ty = taperingY;
+
+		FCL_REAL sp1 = sin(phi1),
+			sp2 = sin(phi2),
+			cp1 = cos(phi1),
+			cp2 = cos(phi2);
+
+		FCL_REAL dtx_dphi2 = a1 * e1 * (-sp1) * signpow(cp1, e1 - 1)
+			* (tx * e2 * cp2 * signpow(sp2, e2 - 1) * signpow(cp2, e2)
+			+ (tx * signpow(sp2, e2) + 1) * e2 * -sp2 * signpow(cp2, e2 - 1));
+
+		FCL_REAL dty_dphi2 = a2 * e1 * cp1 * signpow(sp1, e1 - 1)
+			* (ty * e2 * cp2 * signpow(sp2, e2 - 1) * signpow(cp2, e2)
+			+ (ty * signpow(sp2, e2) + 1) * e2 * -sp2 * signpow(cp2, e2 - 1));
+
+		return Vec3f(dtx_dphi2, dty_dphi2, 0).normalize();
+	}
+
+	// @brief db / dphi1
+	Vec3f SuperOvoid::getZenithTangentDerivativePhi1(FCL_REAL phi1, FCL_REAL phi2) const
+	{
+		// DSL notes, page 3 parametric
+		FCL_REAL e1 = epsilon1, e2 = epsilon2, tx = taperingX, ty = taperingY;
+
+		FCL_REAL sp1 = sin(phi1),
+			sp2 = sin(phi2),
+			cp1 = cos(phi1),
+			cp2 = cos(phi2);
+
+		FCL_REAL dbx_dp1 = a1 * e1 * (-sp1) * signpow(cp1, e1 - 1) *
+			(tx * e2 * cp2 * signpow(sp2, e2 - 1) * signpow(cp2, e2) +
+			(tx * signpow(sp2, e2) + 1) * e2 * (-sp2) * signpow(cp2, e2 - 1));
+
+		FCL_REAL dby_dp1 = a2 * e1 * cp1 * signpow(sp1, e1 - 1) *
+			(ty * e2 * cp2 * signpow(sp2, e2 - 1) * signpow(cp2, e2) + (ty * signpow(sp2, e2) + 1) * e2 * (-sp2) * signpow(cp2, e2 - 1));
+
+		return Vec3f(dbx_dp1, dby_dp1, 0).normalize();
+	}
+
+	// @brief db / dphi2
+	Vec3f SuperOvoid::getZenithTangentDerivativePhi2(FCL_REAL phi1, FCL_REAL phi2) const
+	{
+		// DSL notes, page 3 parametric
+		FCL_REAL e1 = epsilon1, e2 = epsilon2, tx = taperingX, ty = taperingY;
+
+		FCL_REAL sp1 = sin(phi1),
+			sp2 = sin(phi2),
+			cp1 = cos(phi1),
+			cp2 = cos(phi2);
+
+		// Huge common part between dbx_dp2 and dby_dp2
+		FCL_REAL bigAsterisk = tx * e2 * ((e2 - 1) * cp2 * signpow(sp2, e2 - 2) * signpow(cp2, e2 + 1) + signpow(sp2, e2 - 1) * (e2 + 1) * (-sp2 * signpow(cp2, e2)))
+			+ e2 * (tx * e2 * cp2 * signpow(sp2, e2 - 1) * (-sp2) * signpow(cp2, e2 - 1) + (tx * signpow(sp2, e2) + 1) * (-cp2) * signpow(cp2, e2 - 1))
+			+ (tx * signpow(sp2, e2) + 1) * (-sp2) * (e2 - 1) * (-sp2) * signpow(cp2, e2 - 2);
+
+		FCL_REAL dbx_dp2 = a1 * signpow(cp1, e1) * bigAsterisk;
+
+		FCL_REAL dby_dp2 = a2 * signpow(sp1, e1) * bigAsterisk;
+
+		FCL_REAL dbz_dp2 = -a3 * e2 * ((-sp2) * signpow(sp2, e2 - 1) + cp2 * (e2 - 1) * cp2 * signpow(sp2, e2 - 2));
+
+		return Vec3f(dbx_dp2, dby_dp2, dbz_dp2).normalize();
+	}
+
+	// @brief dn / dphi1
+	Vec3f SuperOvoid::getNormalDerivativePhi1(FCL_REAL phi1, FCL_REAL phi2) const
+	{
+		Vec3f t = getAzimuthTangent(phi1, phi2);
+		Vec3f dT = getAzimuthTangentDerivativePhi1(phi1, phi2);
+		Vec3f b = getZenithTangent(phi1, phi2);
+		Vec3f dB = getZenithTangentDerivativePhi1(phi1, phi2);
+
+		Vec3f dTnumerical = getAzimuthTangentDerivativePhi1(phi1, phi2);
+		Vec3f dBnumerical = getZenithTangentDerivativePhi1(phi1, phi2);
+
+		return (dT.cross(b) + t.cross(dB)).normalize();
+	}
+
+	// @brief dn / dphi2
+	Vec3f SuperOvoid::getNormalDerivativePhi2(FCL_REAL phi1, FCL_REAL phi2) const
+	{
+		Vec3f t = getAzimuthTangent(phi1, phi2);
+		Vec3f dT = getAzimuthTangentDerivativePhi2(phi1, phi2);
+		Vec3f b = getZenithTangent(phi1, phi2);
+		Vec3f dB = getZenithTangentDerivativePhi2(phi1, phi2);
+
+		Vec3f dTnumerical = getAzimuthTangentDerivativePhi2(phi1, phi2);
+		Vec3f dBnumerical = getZenithTangentDerivativePhi2(phi1, phi2);
+
+		return dT.cross(b) + t.cross(dB);
+	}
 }
