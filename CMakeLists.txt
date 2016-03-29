@@ -1,6 +1,13 @@
 cmake_minimum_required(VERSION 2.8)
 project(fcl CXX C)
 
+set(CCD_INCLUDE_DIRS "D:/FCL stuff/libccd")
+set(CCD_LIBRARY_DIRS "D:/FCL stuff/libccd")
+set(OCTOMAP_INCLUDE_DIRS "D:/FCL stuff/octomap")
+set(OCTOMAP_LIBRARY_DIRS "D:/FCL stuff/octomap/Build VS2013")
+set(LAPACKE_INCLUDE_DIRS "D:/FCL stuff/lapack")
+set(LAPACKE_LIBRARY_DIRS "D:/FCL stuff/lapack")
+
 # set the default build type
 if (NOT CMAKE_BUILD_TYPE)
    set(CMAKE_BUILD_TYPE Release)
