@@ -9,6 +9,7 @@
 #include "fcl/shape/geometric_shapes.h"
 #include "fcl/shape/SuperOvoid.h"
 #include "fcl/shape/SuperOvoidDetails.h"
+#include "fcl/SuperOvoid_global.h"
 
 using namespace fcl;
 
@@ -17,65 +18,131 @@ void checkSuperEllipsoidCase(SuperOvoid ovoid, SuperOvoid ellipsoid);
 
 BOOST_AUTO_TEST_CASE(superellipsoid)
 {
-	double
-		a1 = 1,
-		a2 = 1.4,
-		a3 = 0.8;
+    double
+        a1 = 1,
+        a2 = 1.4,
+        a3 = 0.8;
 
-	for (double e1 = 0.1; e1 < 1.9; e1 += 0.27)
-	{
-		for (double e2 = 0.11; e2 < 1.9; e2 += 0.24)
-		{
-			// Superovoid, never changed to superellipsoid
-			SuperOvoid ovoid(a1, a2, a3, e1, e2, 0, 0);
-			BOOST_CHECK(ovoid.isOvoid() == true);
+    for (double e1 = 0.1; e1 < 1.9; e1 += 0.27)
+    {
+        for (double e2 = 0.11; e2 < 1.9; e2 += 0.24)
+        {
+            // Superovoid, never changed to superellipsoid
+            SuperOvoid ovoid(a1, a2, a3, e1, e2, 0, 0);
+            BOOST_CHECK(ovoid.isOvoid() == true);
 
-			// Superellipsoid
-			SuperOvoid ellipsoid(a1, a2, a3, e1, e2, 0, 0);
-			ellipsoid.toSuperellipsoid();
-			BOOST_CHECK(ellipsoid.isOvoid() == false);
+            // Superellipsoid
+            SuperOvoid ellipsoid(a1, a2, a3, e1, e2, 0, 0);
+            ellipsoid.toSuperellipsoid();
+            BOOST_CHECK(ellipsoid.isOvoid() == false);
 
-			checkSuperEllipsoidCase(ovoid, ellipsoid);
-		}
-	}
+            checkSuperEllipsoidCase(ovoid, ellipsoid);
+        }
+    }
 
-	return;
+    return;
 }
 
 void checkSuperEllipsoidCase(SuperOvoid ovoid, SuperOvoid ellipsoid)
 {
-	// Confirm that both SuperOvoid and SuperEllipsoid implementations return same values
-	for (int a = -10; a < 10; a++)
-	{
-		double azimuth = a * 3.141592 / 10;
+    // Confirm that both SuperOvoid and SuperEllipsoid implementations return same values
+    for (int a = -10; a < 10; a++)
+    {
+        double azimuth = a * 3.141592 / 10;
 
-		for (int z = -10; z < 10; z++)
-		{
-			double zenith = z * 3.141592 / 2 / 10;
+        for (int z = -10; z < 10; z++)
+        {
+            double zenith = z * 3.141592 / 2 / 10;
 
-			// Using azimuth and zenith directly, for normals
-			Vec3f ovoidNormal = ovoid.getNormal(azimuth, zenith, false);
-			Vec3f ellipsoidNormal = ellipsoid.getNormal(azimuth, zenith, false);
-			BOOST_CHECK(ovoidNormal.equal(ellipsoidNormal, 1e-9));
+            //// Using azimuth and zenith directly, for normals
+            //Vec3f ovoidNormal = ovoid.getNormal(azimuth, zenith, false);
+            //Vec3f ellipsoidNormal = ellipsoid.getNormal(azimuth, zenith, false);
+            //BOOST_CHECK(ovoidNormal.equal(ellipsoidNormal, 1e-9));
 
-			// Using a 3D point, for normals
-			Vec3f point = ovoid.getPoint(azimuth, zenith, false);
-			ovoidNormal = ovoid.getNormal(point);
-			ellipsoidNormal = ellipsoid.getNormal(point);
-			BOOST_CHECK(ovoidNormal.equal(ellipsoidNormal, 1e-9));
+            // Using a 3D point, for normals
+            Vec3f point = ovoid.getPoint(azimuth, zenith, false);
+			Vec3f ovoidNormal = ovoid.getNormal(point);
+			Vec3f ellipsoidNormal = ellipsoid.getNormal(point);
+            BOOST_CHECK(ovoidNormal.equal(ellipsoidNormal, 1e-9));
 
-			// Confirm that both Ovoid and SuperEllipsoid implementations return same implicit function
-			double ovoidImplicit = ovoid.implicitFunction(point);
-			double ellipsoidImplicit = ellipsoid.implicitFunction(point);
-			BOOST_CHECK(std::abs(ovoidImplicit - ellipsoidImplicit) < 1e-9);
-			// Because the points were generated on the surface, implicit should be equal to 0
-			BOOST_CHECK(ovoidImplicit < 1e-9);
-		}
-	}
+            // Confirm that both Ovoid and SuperEllipsoid implementations return same implicit function
+            double ovoidImplicit = ovoid.implicitFunction(point);
+            double ellipsoidImplicit = ellipsoid.implicitFunction(point);
+            BOOST_CHECK(std::abs(ovoidImplicit - ellipsoidImplicit) < 1e-9);
+            // Because the points were generated on the surface, implicit should be equal to 0
+            BOOST_CHECK(ovoidImplicit < 1e-9);
+        }
+    }
 
-	BOOST_CHECK(ovoid.isOvoid() == true);
-	BOOST_CHECK(ellipsoid.isOvoid() == false);
+    BOOST_CHECK(ovoid.isOvoid() == true);
+    BOOST_CHECK(ellipsoid.isOvoid() == false);
 }
+
+int checkParametricNormal(SuperOvoid ovoid)
+{
+    int fails = 0;
+    FCL_REAL tolerance = 1e-3;
+
+    // Confirm that both Implicit and Parametric implementations return same normals
+    for (int a = -9; a < 9; a++)
+    {
+        double azimuth = a * 3.141592 / 10;
+
+        for (int z = -9; z < 9; z++)
+        {
+            double zenith = z * 3.141592 / 2 / 10;
+
+            Vec3f implicitNormal = ovoid.getNormal(azimuth, zenith, false);
+
+            Vec3f paramTangent1 = ovoid.getAzimuthTangent(azimuth, zenith);
+            Vec3f paramTangent2 = ovoid.getZenithTangent(azimuth, zenith);
+            Vec3f paramNormal = paramTangent1.cross(paramTangent2).normalize();
+
+            //std::cout << implicitNormal << std::endl;
+            //std::cout << paramNormal << std::endl;
+            //std::cout << implicitNormal.norm() << std::endl;
+            //std::cout << paramNormal.norm() << std::endl;
+
+            //BOOST_CHECK((implicitNormal - paramNormal).norm() < tolerance);
+
+            if ((implicitNormal - paramNormal).norm() >= tolerance)
+            {
+                //std::cout << implicitNormal << std::endl;
+                //std::cout << paramNormal << std::endl;
+                //std::cout << implicitNormal.norm() << std::endl;
+                //std::cout << paramNormal.norm() << std::endl;
+                fails++;
+            }
+        }
+    }
+
+    return fails;
+}
+
+BOOST_AUTO_TEST_CASE(check_parametric_normal)
+{
+    double
+        a1 = 1,
+        a2 = 1.4,
+        a3 = 0.8;
+
+    int fails = 0;
+
+    for (double e1 = 0.1; e1 < 1.9; e1 += 0.27)
+    {
+        for (double e2 = 0.11; e2 < 1.9; e2 += 0.24)
+        {
+            SuperOvoid ovoid(a1, a2, a3, e1, e2, 0.2, 0.2);
+            fails += checkParametricNormal(ovoid);
+        }
+    }
+
+    //std::cout << "Parametric normal fails: " << fails << std::endl;
+	BOOST_CHECK(fails == 0);
+
+    return;
+}
+
 
 BOOST_AUTO_TEST_CASE(selly_speed_implicitAndNormal)
 {
@@ -422,7 +489,7 @@ BOOST_AUTO_TEST_CASE(vs_meshes)
 	CollisionObject* o1 = getSuperOvoidMeshObject(sov1, azSlices, zeSlices, true);
 	CollisionObject* o2 = getSuperOvoidMeshObject(sov2, azSlices, zeSlices, true);
 
-	const int N = 300;
+	const int N = 100;
 	Timer timer;
 	double collisionSov, collisionMesh, distanceSov, distanceMesh;
 	double collided = 0;
@@ -498,7 +565,7 @@ void compareMeshVsSuperOvoid(SuperOvoid sov1, SuperOvoid sov2,
 		CollisionObject* o2 = getSuperOvoidMeshObject(sov2, azSlices, zeSlices, adaptiveMeshes);
 
 		const Model* model = (const Model*)o1->collisionGeometry().get();
-		printf("Mesh verts = %d    tris = %d\n", model->num_vertices, model->num_tris);
+		//printf("Mesh verts = %d    tris = %d\n", model->num_vertices, model->num_tris);
 
 		double sovTime, meshTime;
 		float wasColliding = 0;
@@ -511,7 +578,7 @@ void compareMeshVsSuperOvoid(SuperOvoid sov1, SuperOvoid sov2,
 			sovTimer.stop();
 			sovTime = sovTimer.getElapsedTimeInMicroSec() / timeSteps;
 
-			printf("Collision with Sov : %04.4f us (%03.1f%% collisions)\n", sovTime, wasColliding * 100);
+			//printf("Collision with Sov : %04.4f us (%03.1f%% collisions)\n", sovTime, wasColliding * 100);
 		}
 
 		// Time mesh stuff
@@ -522,10 +589,10 @@ void compareMeshVsSuperOvoid(SuperOvoid sov1, SuperOvoid sov2,
 			meshTimer.stop();
 			meshTime = meshTimer.getElapsedTimeInMicroSec() / timeSteps;
 
-			printf("Collision with Mesh: %04.4f us (%03.1f%% collisions)\n", meshTime, wasColliding * 100);
+			//printf("Collision with Mesh: %04.4f us (%03.1f%% collisions)\n", meshTime, wasColliding * 100);
 		}
 
-		printf("\t\t\tRatio: %.3f\n", meshTime / sovTime);
+		//printf("\t\t\tRatio: %.3f\n", meshTime / sovTime);
 
 		file << model->num_vertices << "," << model->num_tris << "," << sovTime << "," << meshTime << std::endl;
 
@@ -543,8 +610,8 @@ BOOST_AUTO_TEST_CASE(mesh_precision_vs_time)
 	SuperOvoid sov1(1.4, 0.96, 1.2, 0.7, 0.5, 0.2, 0.3);
 	SuperOvoid sov2(1.1, 1.2, 1.0, 0.4, 1.1, 0.253, 0.243);
 
-	const int timeSteps = 500;
-	const int meshIterations = 20;
+	const int timeSteps = 100;
+	const int meshIterations = 15;
 
 	compareMeshVsSuperOvoid(sov1, sov2, testCollision, "mesh_collide.csv", meshIterations, timeSteps, false);
 	compareMeshVsSuperOvoid(sov1, sov2, testDistance, "mesh_distance.csv", meshIterations, timeSteps, false);
@@ -617,7 +684,7 @@ void compareMeshVsSuperOvoidPrecision(SuperOvoid sov1, SuperOvoid sov2, Transfor
 	int zeSlices = 5;
 
 	// Repetitions for average times
-	int repetitions = 50;
+	int repetitions = 30;
 
 	// Open precisionFile to write results
 	std::ofstream precisionFile;
@@ -670,7 +737,7 @@ void compareMeshVsSuperOvoidPrecision(SuperOvoid sov1, SuperOvoid sov2, Transfor
 			sovB = result.nearest_points[1];
 			sovTime = timer.getElapsedTimeInMicroSec() / repetitions;
 			
-			std::cout << "Superovoid nearest points: " << sovA << "," << sovB << std::endl;
+			//std::cout << "Superovoid nearest points: " << sovA << "," << sovB << std::endl;
 		}
 
 		// Test mesh stuff
@@ -687,12 +754,12 @@ void compareMeshVsSuperOvoidPrecision(SuperOvoid sov1, SuperOvoid sov2, Transfor
 			meshB = result.nearest_points[1];
 			meshTime = timer.getElapsedTimeInMicroSec() / repetitions;
 
-			std::cout << "Superovoid nearest points: " << meshA << "," << meshB << std::endl;
+			//std::cout << "Superovoid nearest points: " << meshA << "," << meshB << std::endl;
 		}
 
 		double errorA = (sovA - meshA).length();
 		double errorB = (sovB - meshB).length();
-		printf("Diff: %f - %f\n", errorA, errorB);
+		//printf("Diff: %f - %f\n", errorA, errorB);
 
 		precisionFile << model->num_vertices << "," << model->num_tris << "," << sovA << "," << sovB << "," << meshA << "," << meshB << "," << errorA << "," << errorB << "," << sovTime << "," << meshTime << std::endl;
 
@@ -714,8 +781,8 @@ BOOST_AUTO_TEST_CASE(superovoid_vs_mesh_precision)
 	Transform3f tf2(Quaternion3f(), Vec3f(2.59, -0.3, -0.4));
 
 	std::cout.precision(3);
-	compareMeshVsSuperOvoidPrecision(sov1, sov2, tf1, tf2, 30, true);
-	compareMeshVsSuperOvoidPrecision(sov1, sov2, tf1, tf2, 30, false);
+	compareMeshVsSuperOvoidPrecision(sov1, sov2, tf1, tf2, 10, true);
+	compareMeshVsSuperOvoidPrecision(sov1, sov2, tf1, tf2, 10, false);
 }
 
 BOOST_AUTO_TEST_CASE(octree_guess)
@@ -754,19 +821,6 @@ BOOST_AUTO_TEST_CASE(octree_guess)
     BOOST_CHECK(g_lastStats.didNotConverge == 0);
     g_lastStats.print(std::cout);
     BOOST_CHECK(g_lastStats.iterations == 1);
-}
-
-BOOST_AUTO_TEST_CASE(sov_memtest)
-{
-	// Superovoid stuff
-	SuperOvoid sov1(1.4, 0.96, 1.2, 0.7, 0.5, 0.2, 0.3);
-	SuperOvoid sov2(1.1, 1.2, 1.0, 0.4, 1.1, 0.253, 0.243);
-
-	// Create superovoid objects, which are always the same
-	CollisionObject* s1 = getSuperOvoidObject(&sov1);
-	CollisionObject* s2 = getSuperOvoidObject(&sov2);
-
-	testDistance(s1, s2, 500);
 }
 
 BOOST_AUTO_TEST_CASE(mesh_small_memtest)
@@ -1008,4 +1062,170 @@ BOOST_AUTO_TEST_CASE(mesh_vs_unity)
 	}
 
 	delete unityVertices;
+}
+
+
+
+
+
+
+
+/** State for the simple RNG */
+int randState;
+
+/** Predictable pseudo-random function to always generate the same output, regardless of running platform. */
+int myRand()
+{
+	int const a = 1103515245;
+	int const c = 12345;
+	randState = a * randState + c;
+	return (randState >> 16) & 0x7FFF;
+}
+
+void mySeedRand(int seed)
+{
+	randState = seed;
+}
+
+float getRandomRange(FCL_REAL min, FCL_REAL max)
+{
+	return min + (myRand() % 1024 / 1024.0) * (max - min);
+}
+
+float getNormalSample()
+{
+	const int levels = 10240;
+	const int samples = 16;
+
+	FCL_REAL sum = 0;
+	for (int i = 0; i < samples; i++)
+		sum += (myRand() % levels) * 1.0 / levels;
+
+	return sum / samples - 0.5;
+}
+
+void setRandomRotation(CollisionObject* obj)
+{
+	FCL_REAL quat[4];
+	for (int i = 0; i < 4; i++)
+		quat[i] = getNormalSample();
+
+	FCL_REAL length = 0;
+	for (int i = 0; i < 4; i++)
+		length += quat[i] * quat[i];
+	length = std::sqrt(length);
+
+	for (int i = 0; i < 4; i++)
+		quat[i] /= length;
+
+	Quaternion3f rotation(quat[0], quat[1], quat[2], quat[3]);
+	obj->setQuatRotation(rotation);
+}
+
+
+void randomizeSuperovoid(SuperOvoid& sov)
+{
+	sov.a1 = 1.0;
+	sov.a2 = 1.0;
+	sov.a3 = 1.0;
+
+	sov.epsilon1 = 1;
+	sov.epsilon2 = 1;
+
+	sov.taperingX = 0;
+	sov.taperingY = 0;
+
+	//sov.a1 = getRandomRange(0.5, 1.5);
+	//sov.a2 = getRandomRange(0.5, 1.5);
+	//sov.a3 = getRandomRange(0.5, 1.5);
+
+	//sov.epsilon1 = getRandomRange(0.3, 1.1);
+	//sov.epsilon2 = getRandomRange(0.3, 1.1);
+
+	//sov.taperingX = getRandomRange(-0.4, 0.4);
+	//sov.taperingY = getRandomRange(-0.4, 0.4);
+}
+
+
+bool isGuessEqual(NewtonRaphsonStats stats1, NewtonRaphsonStats stats2)
+{
+	return 
+		stats1.getGuessA().equal(stats2.getGuessA(), 1e-12)
+		&& stats1.getGuessB().equal(stats2.getGuessB(), 1e-12);
+}
+
+// Testing the implicit and parametric versions,
+// starting from the same initial guess, obtained
+// with the ParametricQuadtree method
+BOOST_AUTO_TEST_CASE(mubo_implicit_vs_parametric_same_guess)
+{
+	std::ofstream fileParametric;
+	fileParametric.open("mubo_parametric.csv");
+	std::ofstream fileImplicit;
+	fileImplicit.open("mubo_implicit.csv");
+	
+	// Write header
+	fileParametric << "iteration,";
+	fileImplicit << "iteration,";
+	NewtonRaphsonStats::printHeader(fileParametric);
+	NewtonRaphsonStats::printHeader(fileImplicit);
+	fileParametric << std::endl;
+	fileImplicit << std::endl;
+
+	// Superovoid stuff
+	SuperOvoid sov1(1.4, 0.96, 1.2, 0.7, 0.5, 0.2, 0.3);
+	SuperOvoid sov2(1.1, 1.2, 1.0, 0.4, 1.1, 0.253, 0.243);
+
+	// Create superovoid objects, which are always the same
+	CollisionObject* s1 = getSuperOvoidObject(&sov1);
+	CollisionObject* s2 = getSuperOvoidObject(&sov2);
+
+	s1->setTranslation(Vec3f());
+	s2->setTranslation(Vec3f(4, 0, 0));
+	
+	mySeedRand(1337);
+
+	for (int i = 0; i < 5; i++)
+	{
+		randomizeSuperovoid(sov1);
+		randomizeSuperovoid(sov2);
+		setRandomRotation(s1);
+		setRandomRotation(s2);
+
+		g_lastStats.resetToDefault();
+		g_lastStatsValid = true;
+		
+		// Use the same initial guess for both experiments
+		g_lastStats.guessType = NewtonRaphsonStats::PARAMETRIC_QUADTREE;
+
+		DistanceRequest request;
+		DistanceResult parametricResult, implicitResult;
+		NewtonRaphsonStats parametricStats, implicitStats;
+
+		// Experiment 1: parametric
+		sov1.clearCachedPoints();
+		sov2.clearCachedPoints();
+		request = DistanceRequest(true);
+		g_lastStats.parametric = true;
+		distance(s1, s2, request, parametricResult);
+		parametricStats = g_lastStats;
+
+		// Experiment 2: implicit
+		sov1.clearCachedPoints();
+		sov2.clearCachedPoints();
+		request = DistanceRequest(true);
+		g_lastStats.parametric = false;
+		distance(s1, s2, request, implicitResult);
+		implicitStats = g_lastStats;
+
+		// Write results
+		fileImplicit << i << "," << implicitStats << std::endl;
+		fileParametric << i << "," << parametricStats << std::endl;
+
+		//BOOST_CHECK(isGuessEqual(parametricStats, implicitStats));
+		//BOOST_CHECK(std::abs(parametricResult.min_distance - implicitResult.min_distance) < 1e-4);
+	}
+
+	fileParametric.close();
+	fileImplicit.close();
 }

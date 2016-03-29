@@ -15,6 +15,7 @@
 #include "fcl/BV/BV.h"
 #include "fcl/BV/OBBRSS.h"
 #include "fcl/shape/SuperOvoid.h"
+#include "fcl/shape/SuperOvoidDetails.h"
 
 #include "fcl/SuperOvoid_global.h" // For NewtonRaphsonStats and timers
 
@@ -193,7 +194,8 @@ namespace fcl
             {
                 if (!useCachedGuesses)
                 {
-                    getParametricInitialGuess(s1, tf1, s2, tf2, qk, stats, useParametric);
+					getInitialGuess(s1, tf1, s2, tf2, qk, stats, useParametric);
+                    //getParametricInitialGuess(s1, tf1, s2, tf2, qk, stats, useParametric);
                 }
                 else // if (useCachedGuesses)
                 {
@@ -243,11 +245,6 @@ namespace fcl
                     stats->nonMinimumDistance++;
 
             }
-
-            // TODO Check if solution found really is minimum distance
-            // Algorithm may converge to maximum distance points instead!
-            // In superellipsoids, those points are symmetrical, so it's easy to figure out
-            // In superovoids, there's no symmetry in relation to the origin...
 
             // Convert solution to global coordinates
             Vec3f localPi, localPj;
@@ -391,35 +388,48 @@ namespace fcl
 
                 function(s1, tf1, s2, tf2, qk, phi);
 
-                // Calculate Jacobian matrix numerically
-                Timer jacobianTimer = Timer();
-                jacobianTimer.start();
-                for (int i = 0; i < size * size; i++)
-                    jacobian[i] = 0;
-                FCL_REAL perturb = 1e-6;
+				Timer jacobianTimer = Timer();
+				jacobianTimer.start();
 
-                for (int col = 0; col < size; col++)
-                {
-                    for (int i = 0; i < size; i++)
-                        qkPerturb[i] = qk[i];
-                    qkPerturb[col] = qkPerturb[col] + perturb;
-                    function(s1, tf1, s2, tf2, qkPerturb, phiPerturb);
+				bool validJacobian;
+				if (size == 6 || stats->analytical == false)
+					validJacobian = getNumericalJacobian(size, s1, tf1, s2, tf2, function, qk, jacobian);
+				else
+				{
+					validJacobian = getAnalyticalParametricJacobian(s1, tf1, s2, tf2, qk, jacobian);
 
-                    for (int i = 0; i < size; i++)
-                    {
-                        jacobian[col * size + i] = (phiPerturb[i] - phi[i]) / perturb;
-                    }
-                }
+					// Debug: compare analytical and numerical
+					FCL_REAL numericalJacobian[16];
+					FCL_REAL jacobianError[16];
+					getNumericalJacobian(size, s1, tf1, s2, tf2, function, qk, numericalJacobian);
 
-                if (isNaN(jacobian, size * size))
-                {
-                    converged = false;
-                    break;
-                }
+					for (int i = 0; i < size * size; i++)
+					{
+						FCL_REAL n = numericalJacobian[i];
+						FCL_REAL a = jacobian[i];
+						FCL_REAL error = std::abs(n - a) / std::abs(n) * 100;
 
-                jacobianTimer.stop();
-                if (stats != NULL)
-                    stats->numericalJacobianTime += jacobianTimer.getElapsedTimeInMicroSec();
+						jacobianError[i] = error;
+					}
+
+					FCL_REAL maxError = 0;
+					for (int i = 0; i < size * size; i++)
+					{
+						if (jacobianError[i] > maxError)
+							maxError = jacobianError[i];
+					}
+					maxError = maxError;
+				}
+
+				jacobianTimer.stop();
+				if (stats != NULL)
+					stats->numericalJacobianTime += jacobianTimer.getElapsedTimeInMicroSec();
+
+				if (!validJacobian)
+				{
+					converged = false;
+					break;
+				}
 
                 // Debug
 #if FCL_SUPEROVOID_DEBUG_LOG > 1
@@ -452,7 +462,8 @@ namespace fcl
                 // If result is better than previous, store its corresponding qk
                 normDeltaQk = LAPACKE_dlange(LAPACK_COL_MAJOR, 'F', size, 1, phi, size);
 
-                if (normDeltaQk < bestNormDeltaQk && !isNaN(phi, size))
+                if ((normDeltaQk < bestNormDeltaQk) || (stats != NULL && stats->returnBest == false)
+                    && !isNaN(phi, size))
                 {
                     bestNormDeltaQk = normDeltaQk;
 
@@ -1096,7 +1107,7 @@ namespace fcl
 
             Vec3f bestA, bestB;
             int bestCornerA = 0, bestCornerB = 0;
-            FCL_REAL best = NAN;
+            FCL_REAL best;
             //FCL_REAL myQk[4], phi[4];
 
             int iterations = 6;
