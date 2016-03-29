@@ -259,7 +259,7 @@ namespace fcl
 				//getPoint(&point, azimuth, zenith, false);
 				//return getNormal(point);
 
-				// This is the true parametric formula
+				// This is the purely-parametric formula
 				return getAzimuthTangent(azimuth, zenith).cross(getZenithTangent(azimuth, zenith));
 			}
 			else

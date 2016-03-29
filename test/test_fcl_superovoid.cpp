@@ -10,6 +10,7 @@
 #include "fcl/shape/SuperOvoid.h"
 #include "fcl/shape/SuperOvoidDetails.h"
 #include "fcl/SuperOvoid_global.h"
+#include "fcl/MuboPoseGenerator.h"
 
 using namespace fcl;
 
@@ -1069,84 +1070,6 @@ BOOST_AUTO_TEST_CASE(mesh_vs_unity)
 
 
 
-
-/** State for the simple RNG */
-int randState;
-
-/** Predictable pseudo-random function to always generate the same output, regardless of running platform. */
-int myRand()
-{
-	int const a = 1103515245;
-	int const c = 12345;
-	randState = a * randState + c;
-	return (randState >> 16) & 0x7FFF;
-}
-
-void mySeedRand(int seed)
-{
-	randState = seed;
-}
-
-float getRandomRange(FCL_REAL min, FCL_REAL max)
-{
-	return min + (myRand() % 1024 / 1024.0) * (max - min);
-}
-
-float getNormalSample()
-{
-	const int levels = 10240;
-	const int samples = 16;
-
-	FCL_REAL sum = 0;
-	for (int i = 0; i < samples; i++)
-		sum += (myRand() % levels) * 1.0 / levels;
-
-	return sum / samples - 0.5;
-}
-
-void setRandomRotation(CollisionObject* obj)
-{
-	FCL_REAL quat[4];
-	for (int i = 0; i < 4; i++)
-		quat[i] = getNormalSample();
-
-	FCL_REAL length = 0;
-	for (int i = 0; i < 4; i++)
-		length += quat[i] * quat[i];
-	length = std::sqrt(length);
-
-	for (int i = 0; i < 4; i++)
-		quat[i] /= length;
-
-	Quaternion3f rotation(quat[0], quat[1], quat[2], quat[3]);
-	obj->setQuatRotation(rotation);
-}
-
-
-void randomizeSuperovoid(SuperOvoid& sov)
-{
-	sov.a1 = 1.0;
-	sov.a2 = 1.0;
-	sov.a3 = 1.0;
-
-	sov.epsilon1 = 1;
-	sov.epsilon2 = 1;
-
-	sov.taperingX = 0;
-	sov.taperingY = 0;
-
-	//sov.a1 = getRandomRange(0.5, 1.5);
-	//sov.a2 = getRandomRange(0.5, 1.5);
-	//sov.a3 = getRandomRange(0.5, 1.5);
-
-	//sov.epsilon1 = getRandomRange(0.3, 1.1);
-	//sov.epsilon2 = getRandomRange(0.3, 1.1);
-
-	//sov.taperingX = getRandomRange(-0.4, 0.4);
-	//sov.taperingY = getRandomRange(-0.4, 0.4);
-}
-
-
 bool isGuessEqual(NewtonRaphsonStats stats1, NewtonRaphsonStats stats2)
 {
 	return 
@@ -1183,14 +1106,15 @@ BOOST_AUTO_TEST_CASE(mubo_implicit_vs_parametric_same_guess)
 	s1->setTranslation(Vec3f());
 	s2->setTranslation(Vec3f(4, 0, 0));
 	
-	mySeedRand(1337);
+	MuboPoseGenerator rand = MuboPoseGenerator();
+	rand.setSeed(1337);
 
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 10; i++)
 	{
-		randomizeSuperovoid(sov1);
-		randomizeSuperovoid(sov2);
-		setRandomRotation(s1);
-		setRandomRotation(s2);
+		rand.randomizeSuperovoid(sov1);
+		rand.randomizeSuperovoid(sov2);
+		rand.setRandomRotation(s1);
+		rand.setRandomRotation(s2);
 
 		g_lastStats.resetToDefault();
 		g_lastStatsValid = true;
