@@ -255,66 +255,66 @@ extern "C"
 		TYPE_D2_BINORMAL
 	};
 
-	__declspec(dllexport) void getVector(double* superovoid, double* point, bool parametric, VecType type, double* out)
-	{
-		SuperOvoid s = SuperOvoid(
-			superovoid[0],
-			superovoid[1],
-			superovoid[2],
-			superovoid[3],
-			superovoid[4],
-			superovoid[5],
-			superovoid[6]);
+	//__declspec(dllexport) void getVector(double* superovoid, double* point, bool parametric, VecType type, double* out)
+	//{
+	//	SuperOvoid s = SuperOvoid(
+	//		superovoid[0],
+	//		superovoid[1],
+	//		superovoid[2],
+	//		superovoid[3],
+	//		superovoid[4],
+	//		superovoid[5],
+	//		superovoid[6]);
 
-		Vec3f outVector;
+	//	Vec3f outVector;
 
-		if (parametric)
-		{
-			switch (type)
-			{
-			case TYPE_POINT:
-				outVector = s.getPoint(point[0], point[1]); break;
+	//	if (parametric)
+	//	{
+	//		switch (type)
+	//		{
+	//		case TYPE_POINT:
+	//			outVector = s.getPoint(point[0], point[1]); break;
 
-			case TYPE_NORMAL:
-				outVector = s.getNormal(point[0], point[1]); break;
-			case TYPE_TANGENT:
-				outVector = s.getAzimuthTangent(point[0], point[1]); break;
-			case TYPE_BINORMAL:
-				outVector = s.getZenithTangent(point[0], point[1]); break;
-			
-			case TYPE_D1_NORMAL:
-				outVector = s.getNormalDerivativePhi1(point[0], point[1]); break;
-			case TYPE_D1_TANGENT:
-				outVector = s.getAzimuthTangentDerivativePhi1(point[0], point[1]); break;
-			case TYPE_D1_BINORMAL:
-				outVector = s.getZenithTangentDerivativePhi1(point[0], point[1]); break;
-			
-			default:
-				// TODO implement phi2 derivatives
-				break;
-			}
-		}
+	//		case TYPE_NORMAL:
+	//			outVector = s.getNormal(point[0], point[1]); break;
+	//		case TYPE_TANGENT:
+	//			outVector = s.getAzimuthTangent(point[0], point[1]); break;
+	//		case TYPE_BINORMAL:
+	//			outVector = s.getZenithTangent(point[0], point[1]); break;
+	//		
+	//		case TYPE_D1_NORMAL:
+	//			outVector = s.getNormalDerivativePhi1(point[0], point[1]); break;
+	//		case TYPE_D1_TANGENT:
+	//			outVector = s.getAzimuthTangentDerivativePhi1(point[0], point[1]); break;
+	//		case TYPE_D1_BINORMAL:
+	//			outVector = s.getZenithTangentDerivativePhi1(point[0], point[1]); break;
+	//		
+	//		default:
+	//			// TODO implement phi2 derivatives
+	//			break;
+	//		}
+	//	}
 
-		// Write output
-		if (out != NULL)
-			for (int i = 0; i < 3; i++)
-				out[i] = outVector[i];
-	}
+	//	// Write output
+	//	if (out != NULL)
+	//		for (int i = 0; i < 3; i++)
+	//			out[i] = outVector[i];
+	//}
 
-	__declspec(dllexport) void getRandomMuboPose(double* sov1, double* quat1, double* sov2, double* quat2, int seed, int index)
-	{
-		if (index < 0)
-			return;
+	//__declspec(dllexport) void getRandomMuboPose(double* sov1, double* quat1, double* sov2, double* quat2, int seed, int index)
+	//{
+	//	if (index < 0)
+	//		return;
 
-		MuboPoseGenerator rand = MuboPoseGenerator();
-		rand.setSeed(seed);
+	//	MuboPoseGenerator rand = MuboPoseGenerator();
+	//	rand.setSeed(seed);
 
-		// Force the RNG generator to advance to the correct state (index)
-		for (int i = -1; i < index; i++)
-		{
-			rand.getRandomSuperovoid(sov1);
-			
-			rand.getRandomSuperovoid(sov2);
-		}
-	}
+	//	// Force the RNG generator to advance to the correct state (index)
+	//	for (int i = -1; i < index; i++)
+	//	{
+	//		rand.getRandomSuperovoid(sov1);
+	//		
+	//		rand.getRandomSuperovoid(sov2);
+	//	}
+	//}
 }
