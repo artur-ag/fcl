@@ -231,7 +231,7 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <WarningLevel>Level1</WarningLevel>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;BOOST_ALL_NO_LIB;BOOST_TEST_DYN_LINK;CMAKE_INTDIR="RelWithDebInfo";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;BOOST_ALL_NO_LIB;BOOST_TEST_DYN_LINK;CMAKE_INTDIR="RelWithDebInfo";HAVE_LAPACK_CONFIG_H;LAPACK_COMPLEX_STRUCTURE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
     </ClCompile>
     <ResourceCompile>
