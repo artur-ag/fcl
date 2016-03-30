@@ -1,0 +1,339 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|Win32">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|Win32">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGUID>{0C67F2F0-8DF3-4E15-95F9-61DF7B7ABDF1}</ProjectGUID>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>Win32</Platform>
+    <ProjectName>test_fcl_superovoid_correctness</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\Coding\FCL\fcl\build\test\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">test_fcl_superovoid_correctness.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">test_fcl_superovoid_correctness</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\Coding\FCL\fcl\build\test\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">test_fcl_superovoid_correctness.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">test_fcl_superovoid_correctness</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">D:\Coding\FCL\fcl\build\test\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">test_fcl_superovoid_correctness.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">test_fcl_superovoid_correctness</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">D:\Coding\FCL\fcl\build\test\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">test_fcl_superovoid_correctness.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">test_fcl_superovoid_correctness</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">true</GenerateManifest>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\Coding\FCL\fcl\include;D:\FCL stuff\octomap;C:\local\boost_1_58_0;D:\Coding\FCL\fcl\build\include;D:\FCL stuff\lapack;D:\FCL stuff\libccd;D:\Coding\FCL\fcl\test\.;D:\Coding\FCL\fcl\build\test;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>Debug/</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level1</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;BOOST_ALL_NO_LIB;BOOST_TEST_DYN_LINK;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;BOOST_ALL_NO_LIB;BOOST_TEST_DYN_LINK;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\Coding\FCL\fcl\include;D:\FCL stuff\octomap;C:\local\boost_1_58_0;D:\Coding\FCL\fcl\build\include;D:\FCL stuff\lapack;D:\FCL stuff\libccd;D:\Coding\FCL\fcl\test\.;D:\Coding\FCL\fcl\build\test;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\Coding\FCL\fcl\include;D:\FCL stuff\octomap;C:\local\boost_1_58_0;D:\Coding\FCL\fcl\build\include;D:\FCL stuff\lapack;D:\FCL stuff\libccd;D:\Coding\FCL\fcl\test\.;D:\Coding\FCL\fcl\build\test;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalOptions> /machine:X86 /debug %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;..\lib\Debug\fcl.lib;C:\local\boost_1_58_0\lib32-msvc-12.0\boost_system-vc120-mt-gd-1_58.lib;C:\local\boost_1_58_0\lib32-msvc-12.0\boost_thread-vc120-mt-gd-1_58.lib;C:\local\boost_1_58_0\lib32-msvc-12.0\boost_date_time-vc120-mt-gd-1_58.lib;C:\local\boost_1_58_0\lib32-msvc-12.0\boost_unit_test_framework-vc120-mt-gd-1_58.lib;ccd.lib;octomap.lib;octomath.lib;C:\local\boost_1_58_0\lib32-msvc-12.0\boost_filesystem-vc120-mt-gd-1_58.lib;lapacke.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:/FCL stuff/octomap/Build VS2013;D:/FCL stuff/octomap/Build VS2013/$(Configuration);D:/FCL stuff/lapack;D:/FCL stuff/lapack/$(Configuration);D:/FCL stuff/libccd;D:/FCL stuff/libccd/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>D:/Coding/FCL/fcl/build/test/Debug/test_fcl_superovoid_correctness.lib</ImportLibrary>
+      <ProgramDataBaseFile>D:/Coding/FCL/fcl/build/test/Debug/test_fcl_superovoid_correctness.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+      <Version>
+      </Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\Coding\FCL\fcl\include;D:\FCL stuff\octomap;C:\local\boost_1_58_0;D:\Coding\FCL\fcl\build\include;D:\FCL stuff\lapack;D:\FCL stuff\libccd;D:\Coding\FCL\fcl\test\.;D:\Coding\FCL\fcl\build\test;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>Release/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level1</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;BOOST_ALL_NO_LIB;BOOST_TEST_DYN_LINK;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;BOOST_ALL_NO_LIB;BOOST_TEST_DYN_LINK;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\Coding\FCL\fcl\include;D:\FCL stuff\octomap;C:\local\boost_1_58_0;D:\Coding\FCL\fcl\build\include;D:\FCL stuff\lapack;D:\FCL stuff\libccd;D:\Coding\FCL\fcl\test\.;D:\Coding\FCL\fcl\build\test;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\Coding\FCL\fcl\include;D:\FCL stuff\octomap;C:\local\boost_1_58_0;D:\Coding\FCL\fcl\build\include;D:\FCL stuff\lapack;D:\FCL stuff\libccd;D:\Coding\FCL\fcl\test\.;D:\Coding\FCL\fcl\build\test;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalOptions> /machine:X86 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;..\lib\Release\fcl.lib;C:\local\boost_1_58_0\lib32-msvc-12.0\boost_system-vc120-mt-1_58.lib;C:\local\boost_1_58_0\lib32-msvc-12.0\boost_thread-vc120-mt-1_58.lib;C:\local\boost_1_58_0\lib32-msvc-12.0\boost_date_time-vc120-mt-1_58.lib;C:\local\boost_1_58_0\lib32-msvc-12.0\boost_unit_test_framework-vc120-mt-1_58.lib;ccd.lib;octomap.lib;octomath.lib;C:\local\boost_1_58_0\lib32-msvc-12.0\boost_thread-vc120-mt-1_58.lib;C:\local\boost_1_58_0\lib32-msvc-12.0\boost_date_time-vc120-mt-1_58.lib;C:\local\boost_1_58_0\lib32-msvc-12.0\boost_filesystem-vc120-mt-1_58.lib;C:\local\boost_1_58_0\lib32-msvc-12.0\boost_system-vc120-mt-1_58.lib;C:\local\boost_1_58_0\lib32-msvc-12.0\boost_unit_test_framework-vc120-mt-1_58.lib;lapacke.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:/FCL stuff/octomap/Build VS2013;D:/FCL stuff/octomap/Build VS2013/$(Configuration);D:/FCL stuff/lapack;D:/FCL stuff/lapack/$(Configuration);D:/FCL stuff/libccd;D:/FCL stuff/libccd/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>D:/Coding/FCL/fcl/build/test/Release/test_fcl_superovoid_correctness.lib</ImportLibrary>
+      <ProgramDataBaseFile>D:/Coding/FCL/fcl/build/test/Release/test_fcl_superovoid_correctness.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+      <Version>
+      </Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\Coding\FCL\fcl\include;D:\FCL stuff\octomap;C:\local\boost_1_58_0;D:\Coding\FCL\fcl\build\include;D:\FCL stuff\lapack;D:\FCL stuff\libccd;D:\Coding\FCL\fcl\test\.;D:\Coding\FCL\fcl\build\test;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>MinSizeRel/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level1</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;BOOST_ALL_NO_LIB;BOOST_TEST_DYN_LINK;CMAKE_INTDIR="MinSizeRel";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;BOOST_ALL_NO_LIB;BOOST_TEST_DYN_LINK;CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\Coding\FCL\fcl\include;D:\FCL stuff\octomap;C:\local\boost_1_58_0;D:\Coding\FCL\fcl\build\include;D:\FCL stuff\lapack;D:\FCL stuff\libccd;D:\Coding\FCL\fcl\test\.;D:\Coding\FCL\fcl\build\test;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\Coding\FCL\fcl\include;D:\FCL stuff\octomap;C:\local\boost_1_58_0;D:\Coding\FCL\fcl\build\include;D:\FCL stuff\lapack;D:\FCL stuff\libccd;D:\Coding\FCL\fcl\test\.;D:\Coding\FCL\fcl\build\test;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalOptions> /machine:X86 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;..\lib\MinSizeRel\fcl.lib;C:\local\boost_1_58_0\lib32-msvc-12.0\boost_system-vc120-mt-1_58.lib;C:\local\boost_1_58_0\lib32-msvc-12.0\boost_thread-vc120-mt-1_58.lib;C:\local\boost_1_58_0\lib32-msvc-12.0\boost_date_time-vc120-mt-1_58.lib;C:\local\boost_1_58_0\lib32-msvc-12.0\boost_unit_test_framework-vc120-mt-1_58.lib;ccd.lib;octomap.lib;octomath.lib;C:\local\boost_1_58_0\lib32-msvc-12.0\boost_thread-vc120-mt-1_58.lib;C:\local\boost_1_58_0\lib32-msvc-12.0\boost_date_time-vc120-mt-1_58.lib;C:\local\boost_1_58_0\lib32-msvc-12.0\boost_filesystem-vc120-mt-1_58.lib;C:\local\boost_1_58_0\lib32-msvc-12.0\boost_system-vc120-mt-1_58.lib;C:\local\boost_1_58_0\lib32-msvc-12.0\boost_unit_test_framework-vc120-mt-1_58.lib;lapacke.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:/FCL stuff/octomap/Build VS2013;D:/FCL stuff/octomap/Build VS2013/$(Configuration);D:/FCL stuff/lapack;D:/FCL stuff/lapack/$(Configuration);D:/FCL stuff/libccd;D:/FCL stuff/libccd/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>D:/Coding/FCL/fcl/build/test/MinSizeRel/test_fcl_superovoid_correctness.lib</ImportLibrary>
+      <ProgramDataBaseFile>D:/Coding/FCL/fcl/build/test/MinSizeRel/test_fcl_superovoid_correctness.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+      <Version>
+      </Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\Coding\FCL\fcl\include;D:\FCL stuff\octomap;C:\local\boost_1_58_0;D:\Coding\FCL\fcl\build\include;D:\FCL stuff\lapack;D:\FCL stuff\libccd;D:\Coding\FCL\fcl\test\.;D:\Coding\FCL\fcl\build\test;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>RelWithDebInfo/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level1</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;BOOST_ALL_NO_LIB;BOOST_TEST_DYN_LINK;CMAKE_INTDIR="RelWithDebInfo";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;BOOST_ALL_NO_LIB;BOOST_TEST_DYN_LINK;CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\Coding\FCL\fcl\include;D:\FCL stuff\octomap;C:\local\boost_1_58_0;D:\Coding\FCL\fcl\build\include;D:\FCL stuff\lapack;D:\FCL stuff\libccd;D:\Coding\FCL\fcl\test\.;D:\Coding\FCL\fcl\build\test;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\Coding\FCL\fcl\include;D:\FCL stuff\octomap;C:\local\boost_1_58_0;D:\Coding\FCL\fcl\build\include;D:\FCL stuff\lapack;D:\FCL stuff\libccd;D:\Coding\FCL\fcl\test\.;D:\Coding\FCL\fcl\build\test;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalOptions> /machine:X86 /debug %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;..\lib\RelWithDebInfo\fcl.lib;C:\local\boost_1_58_0\lib32-msvc-12.0\boost_system-vc120-mt-1_58.lib;C:\local\boost_1_58_0\lib32-msvc-12.0\boost_thread-vc120-mt-1_58.lib;C:\local\boost_1_58_0\lib32-msvc-12.0\boost_date_time-vc120-mt-1_58.lib;C:\local\boost_1_58_0\lib32-msvc-12.0\boost_unit_test_framework-vc120-mt-1_58.lib;ccd.lib;octomap.lib;octomath.lib;C:\local\boost_1_58_0\lib32-msvc-12.0\boost_thread-vc120-mt-1_58.lib;C:\local\boost_1_58_0\lib32-msvc-12.0\boost_date_time-vc120-mt-1_58.lib;C:\local\boost_1_58_0\lib32-msvc-12.0\boost_filesystem-vc120-mt-1_58.lib;C:\local\boost_1_58_0\lib32-msvc-12.0\boost_system-vc120-mt-1_58.lib;C:\local\boost_1_58_0\lib32-msvc-12.0\boost_unit_test_framework-vc120-mt-1_58.lib;lapacke.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:/FCL stuff/octomap/Build VS2013;D:/FCL stuff/octomap/Build VS2013/$(Configuration);D:/FCL stuff/lapack;D:/FCL stuff/lapack/$(Configuration);D:/FCL stuff/libccd;D:/FCL stuff/libccd/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>D:/Coding/FCL/fcl/build/test/RelWithDebInfo/test_fcl_superovoid_correctness.lib</ImportLibrary>
+      <ProgramDataBaseFile>D:/Coding/FCL/fcl/build/test/RelWithDebInfo/test_fcl_superovoid_correctness.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+      <Version>
+      </Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\Coding\FCL\fcl\test\CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Building Custom Rule D:/Coding/FCL/fcl/test/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+D:\Programs\CMake\bin\cmake.exe -HD:/Coding/FCL/fcl -BD:/Coding/FCL/fcl/build --check-stamp-file D:\Coding\FCL\fcl\build\test\CMakeFiles\generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:/Coding/FCL/fcl/test/CMakeLists.txt;D:\Coding\FCL\fcl\test\CMakeLists.txt;D:\Coding\FCL\fcl\test\fcl_resources\config.h.in;D:\Coding\FCL\fcl\test\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\Coding\FCL\fcl\build\test\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Building Custom Rule D:/Coding/FCL/fcl/test/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+D:\Programs\CMake\bin\cmake.exe -HD:/Coding/FCL/fcl -BD:/Coding/FCL/fcl/build --check-stamp-file D:\Coding\FCL\fcl\build\test\CMakeFiles\generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:/Coding/FCL/fcl/test/CMakeLists.txt;D:\Coding\FCL\fcl\test\CMakeLists.txt;D:\Coding\FCL\fcl\test\fcl_resources\config.h.in;D:\Coding\FCL\fcl\test\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\Coding\FCL\fcl\build\test\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">Building Custom Rule D:/Coding/FCL/fcl/test/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+D:\Programs\CMake\bin\cmake.exe -HD:/Coding/FCL/fcl -BD:/Coding/FCL/fcl/build --check-stamp-file D:\Coding\FCL\fcl\build\test\CMakeFiles\generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">D:/Coding/FCL/fcl/test/CMakeLists.txt;D:\Coding\FCL\fcl\test\CMakeLists.txt;D:\Coding\FCL\fcl\test\fcl_resources\config.h.in;D:\Coding\FCL\fcl\test\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">D:\Coding\FCL\fcl\build\test\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">Building Custom Rule D:/Coding/FCL/fcl/test/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+D:\Programs\CMake\bin\cmake.exe -HD:/Coding/FCL/fcl -BD:/Coding/FCL/fcl/build --check-stamp-file D:\Coding\FCL\fcl\build\test\CMakeFiles\generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">D:/Coding/FCL/fcl/test/CMakeLists.txt;D:\Coding\FCL\fcl\test\CMakeLists.txt;D:\Coding\FCL\fcl\test\fcl_resources\config.h.in;D:\Coding\FCL\fcl\test\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">D:\Coding\FCL\fcl\build\test\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="D:/Coding/FCL/fcl/build/ZERO_CHECK.vcxproj">
+      <Project>C1AB1AA8-3A84-4515-A39E-7C2FD7DF7D4B</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/Coding/FCL/fcl/build/src/fcl.vcxproj">
+      <Project>F6F1CFE0-AA60-48B5-B520-E56403690565</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\test\test_fcl_superovoid_correctness.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
