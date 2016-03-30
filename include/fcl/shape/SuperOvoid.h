@@ -137,36 +137,11 @@ namespace fcl
 			return _isOvoid;
 		}
 
-		/// @brief Evaluate implicit function at a given point, in local coordinates.  This returns 0 for points on the surface, >0 for points outside, <0 for points inside.
-		inline FCL_REAL implicitFunction(Vec3f point) const
-		{
-			return implicitFunction(point[0], point[1], point[2]);
-		}
-
-		/// @brief Evaluate implicit function at a given point, in local coordinates.  This returns 0 for points on the surface, >0 for points outside, <0 for points inside.
-		FCL_REAL implicitFunction(FCL_REAL x, FCL_REAL y, FCL_REAL z) const
-		{
-			x = x / a1;
-			y = y / a2;
-			z = z / a3;
-
-			if (_isOvoid)
-				return
-					pow(
-					(pow(std::abs(x / (taperingX * z + 1)), 2 / epsilon1)
-					+ pow(std::abs(y / (taperingY * z + 1)), 2 / epsilon1)),
-					epsilon1 / epsilon2)
-					+ pow(std::abs(z), 2 / epsilon2)
-					- 1;
-			else
-				return
-					pow(
-					(pow(std::abs(x), 2 / epsilon1)
-					+ pow(std::abs(y), 2 / epsilon1)),
-					epsilon1 / epsilon2)
-					+ pow(std::abs(z), 2 / epsilon2)
-					- 1;
-		}
+		inline FCL_REAL implicitFunction(Vec3f point) const;
+		FCL_REAL implicitFunction(FCL_REAL x, FCL_REAL y, FCL_REAL z) const;
+		void SuperOvoid::getPoint(Vec3f* target, FCL_REAL azimuth, FCL_REAL zenith, bool equallySpaced) const;
+		Vec3f getNormal(Vec3f point) const;
+		Vec3f getNormal(FCL_REAL azimuth, FCL_REAL zenith, bool useEquallySpacedTransform) const;
 
 		void computeLocalOctree(FCL_REAL size)
 		{
@@ -190,91 +165,7 @@ namespace fcl
 			localOctree = new OcTree(boost::shared_ptr<const octomap::OcTree>(octomapOcTree, null_deleter()));
 		}
 
-		/// @brief Get local normal direction at a given point on the surface of the superovoid. Normalized.
-		Vec3f getNormal(Vec3f point) const
-		{
-			FCL_REAL x = point[0] / a1;
-			FCL_REAL y = point[1] / a2;
-			FCL_REAL z = point[2] / a3;
-			FCL_REAL absX = std::abs(x);
-			FCL_REAL absY = std::abs(y);
-			FCL_REAL absZ = std::abs(z);
 
-			if (_isOvoid)
-			{
-				FCL_REAL tfx = std::pow(taperingX * z + 1, -2 / epsilon1);
-				FCL_REAL tfy = std::pow(taperingY * z + 1, -2 / epsilon1);
-				FCL_REAL aux = std::pow(
-					tfx * std::pow(absX, 2 / epsilon1)
-					+ tfy * std::pow(absY, 2 / epsilon1),
-					epsilon1 / epsilon2 - 1);
-
-				FCL_REAL nX = tfx * std::pow(absX, 2 / epsilon1 - 1) * aux * SIGN(x);
-				FCL_REAL nY = tfy * std::pow(absY, 2 / epsilon1 - 1) * aux * SIGN(y);
-
-				FCL_REAL dtfx = taperingX * std::pow(taperingX * z + 1, -2 / epsilon1 - 1) * std::pow(absX, 2 / epsilon1);
-				FCL_REAL dtfy = taperingY * std::pow(taperingY * z + 1, -2 / epsilon1 - 1) * std::pow(absY, 2 / epsilon1);
-
-				FCL_REAL nZ = (-dtfx - dtfy) * aux + std::pow(absZ, 2 / epsilon2 - 1) * SIGN(z);
-
-				Vec3f normal = Vec3f(nX / a1, nY / a2, nZ / a3);
-				normal.normalize();
-				return normal;
-			}
-			else
-			{
-				FCL_REAL aux = std::pow(
-					std::pow(absX, 2 / epsilon1)
-					+ std::pow(absY, 2 / epsilon1),
-					epsilon1 / epsilon2 - 1);
-
-				FCL_REAL nX = std::pow(absX, 2 / epsilon1 - 1) * aux * SIGN(x);
-				FCL_REAL nY = std::pow(absY, 2 / epsilon1 - 1) * aux * SIGN(y);
-				FCL_REAL nZ = std::pow(absZ, 2 / epsilon2 - 1) * SIGN(z);
-
-				Vec3f normal = Vec3f(nX / a1, nY / a2, nZ / a3);
-				normal.normalize();
-				return normal;
-			}
-		}
-
-		/// @brief Get local normal direction at a given set of coordinates on the surface of the superovoid (in radians). Normalized.
-		Vec3f getNormal(FCL_REAL azimuth, FCL_REAL zenith, bool useEquallySpacedTransform) const
-		{
-			// Adjust parameters so that vertices are almost equally spaced, it's prettier
-			if (useEquallySpacedTransform)
-			{
-				azimuth = equallySpacedTransform(azimuth, epsilon1);
-				zenith = equallySpacedTransform(zenith, epsilon2);
-			}
-			if (zenith > (pi / 2))
-				zenith += pi;
-			else if (zenith < (-pi / 2))
-				zenith -= pi;
-
-			if (_isOvoid)
-			{
-				Vec3f point;
-				getPoint(&point, azimuth, zenith, false);
-				return getNormal(point);
-			}
-			else
-			{
-				double cosA = std::cos(azimuth);
-				double sinA = std::sin(azimuth);
-				double cosZ = std::cos(zenith);
-				double sinZ = std::sin(zenith);
-
-				double cosZPowered = SIGN(cosZ) * std::pow(std::abs(cosZ), 2 - epsilon2);
-				double x = SIGN(cosA) * std::pow(std::abs(cosA), 2 - epsilon1) * cosZPowered;
-				double y = SIGN(sinA) * std::pow(std::abs(sinA), 2 - epsilon1) * cosZPowered;
-				double z = SIGN(sinZ) * std::pow(std::abs(sinZ), 2 - epsilon2);
-
-				Vec3f normal = Vec3f(x / a1, y / a2, z / a3);
-				normal.normalize();
-				return normal;
-			}
-		}
 
 		/// @brief Get node type
 		NODE_TYPE getNodeType() const { return GEOM_SUPEROVOID; }
@@ -310,42 +201,7 @@ namespace fcl
 
 
 	public:
-		/// @brief Get local point in Cartesian coordinates with the given parametric coordinates (in radians).
-		void getPoint(Vec3f* target, FCL_REAL azimuth, FCL_REAL zenith, bool equallySpaced) const
-		{
-			// Adjust parameters so that vertices are almost equally spaced, it's prettier
-			if (equallySpaced)
-			{
-				azimuth = equallySpacedTransform(azimuth, epsilon1);
-				zenith = equallySpacedTransform(zenith, epsilon2);
-			}
-			if (zenith > (pi / 2))
-				zenith += pi;
-			else if (zenith < (-pi / 2))
-				zenith -= pi;
 
-			// Calculate coordinates
-			FCL_REAL z = (SIGN(std::sin(zenith))
-				* std::pow(std::abs(std::sin(zenith)), epsilon2))
-				* a3;
-
-			FCL_REAL taperingFactorX = taperingX * z / a3 + 1;
-			FCL_REAL taperingFactorY = taperingY * z / a3 + 1;
-
-			FCL_REAL x = ((SIGN(std::cos(azimuth) * std::cos(zenith)))
-				* std::pow(std::abs(std::cos(azimuth)), epsilon1)
-				* std::pow(std::abs(std::cos(zenith)), epsilon2))
-				* taperingFactorX
-				* a1;
-
-			FCL_REAL y = ((SIGN(std::sin(azimuth) * std::cos(zenith)))
-				* std::pow(std::abs(std::sin(azimuth)), epsilon1)
-				* std::pow(std::abs(std::cos(zenith)), epsilon2))
-				* taperingFactorY
-				* a2;
-
-			target->setValue(x, y, z);
-		}
 
 		Vec3f getPoint(FCL_REAL azimuth, FCL_REAL zenith, bool equallySpaced) const
 		{
