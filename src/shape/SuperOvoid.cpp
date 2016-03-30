@@ -15,6 +15,7 @@
 #include "fcl/BV/BV.h"
 #include "fcl/BV/OBBRSS.h"
 #include "fcl/shape/SuperOvoid.h"
+#include "fcl/shape/SuperOvoidDetails.h"
 
 #include "fcl/SuperOvoid_global.h" // For NewtonRaphsonStats and timers
 
@@ -68,17 +69,13 @@ namespace fcl
         bool solveNewtonRaphson(int size, FCL_REAL tolerance, int maxIterations, const SuperOvoid& s1, const Transform3f& tf1, const SuperOvoid& s2, const Transform3f& tf2, void(*function)(const SuperOvoid& s1, const Transform3f& tf1, const SuperOvoid& s2, const Transform3f& tf2, FCL_REAL* qk, FCL_REAL phi[6]), FCL_REAL* guess, NewtonRaphsonStats* stats);
         bool isMinimumDistance(const SuperOvoid& s1, const Transform3f& t1, const SuperOvoid& s2, const Transform3f& t2, const double* qk, bool parametric);
 
-        /// @brief Returns true if any of the cells in a vector is NaN.
-        bool isNaN(FCL_REAL* vector, int size)
-        {
-            for (int i = 0; i < size; i++)
-                if (std::isnan(vector[i]))
-                    return true;
-
-            return false;
-        }
-
-
+		bool isNaN(FCL_REAL* vector, int size)
+		{
+			for (int i = 0; i < size; i++)
+				if (std::isnan(vector[i]))
+					return true;
+			return false;
+		}
 
         /// @brief Computes the distance between two Superovoids
         /// Returns true if the superovoids are separated. Otherwise, returns false.
@@ -393,32 +390,18 @@ namespace fcl
                 // Calculate Jacobian matrix numerically
                 Timer jacobianTimer = Timer();
                 jacobianTimer.start();
-                for (int i = 0; i < size * size; i++)
-                    jacobian[i] = 0;
-                FCL_REAL perturb = 1e-6;
 
-                for (int col = 0; col < size; col++)
-                {
-                    for (int i = 0; i < size; i++)
-                        qkPerturb[i] = qk[i];
-                    qkPerturb[col] = qkPerturb[col] + perturb;
-                    function(s1, tf1, s2, tf2, qkPerturb, phiPerturb);
-
-                    for (int i = 0; i < size; i++)
-                    {
-                        jacobian[col * size + i] = (phiPerturb[i] - phi[i]) / perturb;
-                    }
-                }
-
-                if (isNaN(jacobian, size * size))
-                {
-                    converged = false;
-                    break;
-                }
+				bool validJacobian = getNumericalJacobian(size, s1, tf1, s2, tf2, function, qk, jacobian);
 
                 jacobianTimer.stop();
                 if (stats != NULL)
                     stats->numericalJacobianTime += jacobianTimer.getElapsedTimeInMicroSec();
+
+				if (!validJacobian)
+				{
+					converged = false;
+					break;
+				}
 
                 // Debug
 #if FCL_SUPEROVOID_DEBUG_LOG > 1

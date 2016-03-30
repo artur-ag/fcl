@@ -411,6 +411,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="D:\Coding\FCL\fcl\include\fcl\broadphase\broadphase_spatialhash.hxx" />
     <ClInclude Include="D:\Coding\FCL\fcl\include\fcl\broadphase\hierarchy_tree.hxx" />
     <ClInclude Include="D:\Coding\FCL\fcl\build\include\fcl\config.h" />
+    <ClCompile Include="..\..\src\shape\jacobians.cpp" />
     <ClCompile Include="D:\Coding\FCL\fcl\src\articulated_model\joint.cpp" />
     <ClCompile Include="D:\Coding\FCL\fcl\src\articulated_model\joint_config.cpp" />
     <ClCompile Include="D:\Coding\FCL\fcl\src\articulated_model\link.cpp" />
