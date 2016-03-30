@@ -239,7 +239,7 @@ namespace fcl
 		}
 
 		/// @brief Get local normal direction at a given set of coordinates on the surface of the superovoid (in radians). Normalized.
-		Vec3f getNormal(FCL_REAL azimuth, FCL_REAL zenith, bool useEquallySpacedTransform = false) const
+		Vec3f getNormal(FCL_REAL azimuth, FCL_REAL zenith, bool useEquallySpacedTransform) const
 		{
 			// Adjust parameters so that vertices are almost equally spaced, it's prettier
 			if (useEquallySpacedTransform)
@@ -254,13 +254,9 @@ namespace fcl
 
 			if (_isOvoid)
 			{
-				// This uses the implicit formula
-				//Vec3f point;
-				//getPoint(&point, azimuth, zenith, false);
-				//return getNormal(point);
-
-				// This is the purely-parametric formula
-				return getAzimuthTangent(azimuth, zenith).cross(getZenithTangent(azimuth, zenith));
+				Vec3f point;
+				getPoint(&point, azimuth, zenith, false);
+				return getNormal(point);
 			}
 			else
 			{
@@ -280,220 +276,20 @@ namespace fcl
 			}
 		}
 
-		// @brief Get tangent in azimuth direction (tangent)
-		Vec3f getAzimuthTangent(FCL_REAL azimuth, FCL_REAL zenith) const
-        {
-            Vec3f point = getPoint(azimuth, zenith, false);
-            FCL_REAL z = point[2];
-
-            FCL_REAL sinA = std::sin(azimuth);
-            FCL_REAL cosA = std::cos(azimuth);
-            FCL_REAL sinZ = std::sin(zenith);
-            FCL_REAL cosZ = std::cos(zenith);
-
-            FCL_REAL dx = a1 * (taperingX * z / a3 + 1) * signpow(cosZ, epsilon2) * (-sinA) * epsilon1 * std::pow(std::abs(cosA), epsilon1 - 1);
-            FCL_REAL dy = a2 * (taperingY * z / a3 + 1) * signpow(cosZ, epsilon2) * (cosA)* epsilon1 * std::pow(std::abs(sinA), epsilon1 - 1);
-            FCL_REAL dz = 0;
-
-            return Vec3f(dx, dy, dz).normalize();
-        }
-
-		// @brief Get tangent in zenith direction (binormal)
-		Vec3f getZenithTangent(FCL_REAL azimuth, FCL_REAL zenith) const
-        {
-            Vec3f point = getPoint(azimuth, zenith, false);
-            FCL_REAL z = point[2];
-
-            FCL_REAL sinA = std::sin(azimuth);
-            FCL_REAL cosA = std::cos(azimuth);
-            FCL_REAL sinZ = std::sin(zenith);
-            FCL_REAL cosZ = std::cos(zenith);
-
-            double dz = a3 * (cosZ)* epsilon2 * std::pow(std::abs(sinZ), epsilon2 - 1);
-
-            double dEpsilon2Term = (-sinZ) * epsilon2 * std::pow(std::abs(cosZ), epsilon2 - 1);
-
-            double dx = a1 * (taperingX * z / a3 + 1) * signpow(cosA, epsilon1) * dEpsilon2Term + dz * a1 * (taperingX / a3) * signpow(cosA, epsilon1) * signpow(cosZ, epsilon2);
-            double dy = a2 * (taperingY * z / a3 + 1) * signpow(sinA, epsilon1) * dEpsilon2Term + dz * a2 * (taperingY / a3) * signpow(sinA, epsilon1) * signpow(cosZ, epsilon2);
-
-            return Vec3f(dx, dy, dz).normalize();
-        }
-
-		// @brief dt / dphi1
-		Vec3f getAzimuthTangentDerivativePhi1(FCL_REAL phi1, FCL_REAL phi2) const
-		{
-			// DSL notes, page 2 parametric
-			FCL_REAL e1 = epsilon1, e2 = epsilon2, tx = taperingX, ty = taperingY;
-
-			FCL_REAL dtx_dphi1 = a1 * (tx * signpow(sin(phi2), e2) + 1)
-				* signpow(cos(phi2), e2) * e1
-				* (-cos(phi1) * signpow(cos(phi1), e1 - 1)
-				+ (-sin(phi1) * (e1 - 1) * (-sin(phi1)) * signpow(cos(phi1), e1 - 2)));
-
-			FCL_REAL dty_dphi1 = a2 * (ty * signpow(sin(phi2), e2) + 1)
-				* signpow(cos(phi2), e2) * e1
-				* (-sin(phi1) * signpow(sin(phi1), e1 - 1)
-				+ (cos(phi1) * (e1 - 1) * cos(phi1) * signpow(sin(phi1), e1 - 2)));
-
-			return Vec3f(dtx_dphi1, dty_dphi1, 0).normalize();
-		}
-
-		Vec3f getAzimuthTangentDerivativePhi1Numerical(FCL_REAL phi1, FCL_REAL phi2) const
-		{
-			FCL_REAL delta = 1e-4;
-			Vec3f tangent = getAzimuthTangent(phi1, phi2);
-			Vec3f disturbed = getAzimuthTangent(phi1 + delta, phi2);
-
-			return (disturbed - tangent) / delta;
-		}
-
-		// @brief dt / dphi2
-		Vec3f getAzimuthTangentDerivativePhi2(FCL_REAL phi1, FCL_REAL phi2) const
-		{
-			// DSL notes, page 2 parametric
-			FCL_REAL e1 = epsilon1, e2 = epsilon2, tx = taperingX, ty = taperingY;
-
-			FCL_REAL sp1 = sin(phi1),
-				sp2 = sin(phi2),
-				cp1 = cos(phi1),
-				cp2 = cos(phi2);
-
-			FCL_REAL dtx_dphi2 = a1 * e1 * (-sp1) * signpow(cp1, e1 - 1)
-				* (tx * e2 * cp2 * signpow(sp2, e2 - 1) * signpow(cp2, e2)
-				+ (tx * signpow(sp2, e2) + 1) * e2 * -sp2 * signpow(cp2, e2 - 1));
-
-			FCL_REAL dty_dphi2 = a2 * e1 * cp1 * signpow(sp1, e1 - 1)
-				* (ty * e2 * cp2 * signpow(sp2, e2 - 1) * signpow(cp2, e2)
-				+ (ty * signpow(sp2, e2) + 1) * e2 * -sp2 * signpow(cp2, e2 - 1));
-
-			return Vec3f(dtx_dphi2, dty_dphi2, 0).normalize();
-		}
-
-		Vec3f getAzimuthTangentDerivativePhi2Numerical(FCL_REAL phi1, FCL_REAL phi2) const
-		{
-			FCL_REAL delta = 1e-3;
-			Vec3f tangent = getAzimuthTangent(phi1, phi2);
-			Vec3f disturbed = getAzimuthTangent(phi1, phi2 + delta);
-
-			return (disturbed - tangent) / delta;
-		}
-
-		// @brief db / dphi1
-		Vec3f getZenithTangentDerivativePhi1(FCL_REAL phi1, FCL_REAL phi2) const
-		{
-			// DSL notes, page 3 parametric
-			FCL_REAL e1 = epsilon1, e2 = epsilon2, tx = taperingX, ty = taperingY;
-		
-			FCL_REAL sp1 = sin(phi1),
-				sp2 = sin(phi2),
-				cp1 = cos(phi1),
-				cp2 = cos(phi2);
-
-			FCL_REAL dbx_dp1 = a1 * e1 * (-sp1) * signpow(cp1, e1 - 1) *
-				(tx * e2 * cp2 * signpow(sp2, e2 - 1) * signpow(cp2, e2) +
-				(tx * signpow(sp2, e2) + 1) * e2 * (-sp2) * signpow(cp2, e2 - 1));
-
-			FCL_REAL dby_dp1 = a2 * e1 * cp1 * signpow(sp1, e1 - 1) *
-				(ty * e2 * cp2 * signpow(sp2, e2 - 1) * signpow(cp2, e2) + (ty * signpow(sp2, e2) + 1) * e2 * (-sp2) * signpow(cp2, e2 - 1));
-
-			return Vec3f(dbx_dp1, dby_dp1, 0).normalize();
-		}
-
-		Vec3f getZenithTangentDerivativePhi1Numerical(FCL_REAL phi1, FCL_REAL phi2) const
-		{
-			FCL_REAL delta = 1e-4;
-			Vec3f tangent = getZenithTangent(phi1, phi2);
-			Vec3f disturbed = getZenithTangent(phi1 + delta, phi2);
-
-			return (disturbed - tangent) / delta;
-		}
-
-		// @brief db / dphi2
-		Vec3f getZenithTangentDerivativePhi2(FCL_REAL phi1, FCL_REAL phi2) const
-		{
-			// DSL notes, page 3 parametric
-			FCL_REAL e1 = epsilon1, e2 = epsilon2, tx = taperingX, ty = taperingY;
-
-			FCL_REAL sp1 = sin(phi1),
-				sp2 = sin(phi2),
-				cp1 = cos(phi1),
-				cp2 = cos(phi2);
-
-			// Huge common part between dbx_dp2 and dby_dp2
-			FCL_REAL bigAsterisk = tx * e2 * ((e2 - 1) * cp2 * signpow(sp2, e2 - 2) * signpow(cp2, e2 + 1) + signpow(sp2, e2 - 1) * (e2 + 1) * (-sp2 * signpow(cp2, e2)))
-				+ e2 * (tx * e2 * cp2 * signpow(sp2, e2 - 1) * (-sp2) * signpow(cp2, e2 - 1) + (tx * signpow(sp2, e2) + 1) * (-cp2) * signpow(cp2, e2 - 1))
-				+ (tx * signpow(sp2, e2) + 1) * (-sp2) * (e2 - 1) * (-sp2) * signpow(cp2, e2 - 2);
-
-			FCL_REAL dbx_dp2 = a1 * signpow(cp1, e1) * bigAsterisk;
-
-			FCL_REAL dby_dp2 = a2 * signpow(sp1, e1) * bigAsterisk;
-
-			FCL_REAL dbz_dp2 = -a3 * e2 * ((-sp2) * signpow(sp2, e2 - 1) + cp2 * (e2 - 1) * cp2 * signpow(sp2, e2 - 2));
-
-			return Vec3f(dbx_dp2, dby_dp2, dbz_dp2).normalize();
-		}
-
-		Vec3f getZenithTangentDerivativePhi2Numerical(FCL_REAL phi1, FCL_REAL phi2) const
-		{
-			FCL_REAL delta = 1e-4;
-			Vec3f tangent = getZenithTangent(phi1, phi2);
-			Vec3f disturbed = getZenithTangent(phi1, phi2 + delta);
-
-			return (disturbed - tangent) / delta;
-		}
-
-		// @brief dn / dphi1
-		Vec3f getNormalDerivativePhi1(FCL_REAL phi1, FCL_REAL phi2) const
-		{
-			Vec3f t = getAzimuthTangent(phi1, phi2);
-			Vec3f dT = getAzimuthTangentDerivativePhi1(phi1, phi2);
-			Vec3f b = getZenithTangent(phi1, phi2);
-			Vec3f dB = getZenithTangentDerivativePhi1(phi1, phi2);
-
-			Vec3f dTnumerical = getAzimuthTangentDerivativePhi1Numerical(phi1, phi2);
-			Vec3f dBnumerical = getZenithTangentDerivativePhi1Numerical(phi1, phi2);
-
-			return (dT.cross(b) + t.cross(dB)).normalize();
-		}
-
-		Vec3f getNormalDerivativePhi1Numerical(FCL_REAL phi1, FCL_REAL phi2) const
-		{
-			Vec3f t = getAzimuthTangent(phi1, phi2);
-			Vec3f dT = getAzimuthTangentDerivativePhi1Numerical(phi1, phi2);
-			Vec3f b = getZenithTangent(phi1, phi2);
-			Vec3f dB = getZenithTangentDerivativePhi1Numerical(phi1, phi2);
-
-			return dT.cross(b) + t.cross(dB);
-		}
-
-		// @brief dn / dphi2
-		Vec3f getNormalDerivativePhi2(FCL_REAL phi1, FCL_REAL phi2) const
-		{
-			Vec3f t = getAzimuthTangent(phi1, phi2);
-			Vec3f dT = getAzimuthTangentDerivativePhi2(phi1, phi2);
-			Vec3f b = getZenithTangent(phi1, phi2);
-			Vec3f dB = getZenithTangentDerivativePhi2(phi1, phi2);
-
-			Vec3f dTnumerical = getAzimuthTangentDerivativePhi2Numerical(phi1, phi2);
-			Vec3f dBnumerical = getZenithTangentDerivativePhi2Numerical(phi1, phi2);
-
-			return dT.cross(b) + t.cross(dB);
-		}
-
 		/// @brief Get node type
 		NODE_TYPE getNodeType() const { return GEOM_SUPEROVOID; }
 
-		// DEBUG
-		//Vec3f getNumericalDerivative(Vec3f(SuperOvoid::*function)(FCL_REAL phi1, FCL_REAL phi2) const, FCL_REAL phi1, FCL_REAL phi2, int variable)
+		//Matrix3f computeMomentofInertia() const
 		//{
-		//	FCL_REAL delta = 1e-4;
-		//	Vec3f normal = (this->*function)(phi1, phi2);
-		//	Vec3f perturbed;
-		//	if (variable == 0)
-		//		perturbed = (this->*function)(phi1 + delta, phi2);
-		//	else if (variable == 1)
-		//		perturbed = (this->*function)(phi1, phi2 + delta
-		//	return (perturbed - normal) / delta;
+		//	FCL_REAL I = 0.4 * radius * radius * computeVolume();
+		//	return Matrix3f(I, 0, 0,
+		//		0, I, 0,
+		//		0, 0, I);
+		//}
+
+		//FCL_REAL computeVolume() const
+		//{
+		//	return 4 * boost::math::constants::pi<FCL_REAL>() * radius * radius / 3;
 		//}
 
 	private:
@@ -528,33 +324,30 @@ namespace fcl
 			else if (zenith < (-pi / 2))
 				zenith -= pi;
 
-			FCL_REAL sinA = std::sin(azimuth),
-				sinZ = std::sin(zenith),
-				cosA = std::cos(azimuth),
-				cosZ = std::cos(zenith);
-
 			// Calculate coordinates
-			FCL_REAL z = SIGN(sinZ) * signpow(sinZ, epsilon2) * a3;
+			FCL_REAL z = (SIGN(std::sin(zenith))
+				* std::pow(std::abs(std::sin(zenith)), epsilon2))
+				* a3;
 
 			FCL_REAL taperingFactorX = taperingX * z / a3 + 1;
 			FCL_REAL taperingFactorY = taperingY * z / a3 + 1;
 
-			FCL_REAL x = SIGN(cosA * cosZ)
-				* signpow(cosA, epsilon1)
-				* signpow(cosZ, epsilon2)
+			FCL_REAL x = ((SIGN(std::cos(azimuth) * std::cos(zenith)))
+				* std::pow(std::abs(std::cos(azimuth)), epsilon1)
+				* std::pow(std::abs(std::cos(zenith)), epsilon2))
 				* taperingFactorX
 				* a1;
 
-			FCL_REAL y = SIGN(sinA * cosZ)
-				* signpow(sinA, epsilon1)
-				* signpow(cosZ, epsilon2)
+			FCL_REAL y = ((SIGN(std::sin(azimuth) * std::cos(zenith)))
+				* std::pow(std::abs(std::sin(azimuth)), epsilon1)
+				* std::pow(std::abs(std::cos(zenith)), epsilon2))
 				* taperingFactorY
 				* a2;
 
 			target->setValue(x, y, z);
 		}
 
-		Vec3f getPoint(FCL_REAL azimuth, FCL_REAL zenith, bool equallySpaced = false) const
+		Vec3f getPoint(FCL_REAL azimuth, FCL_REAL zenith, bool equallySpaced) const
 		{
 			Vec3f target;
 			getPoint(&target, azimuth, zenith, equallySpaced);
@@ -707,11 +500,6 @@ namespace fcl
 
 			return start + (value - start) % (end - start);
 		}
-
-        static inline FCL_REAL signpow(FCL_REAL a, FCL_REAL b)
-        {
-			return a * std::pow(std::pow(a, 2), (b - 1) / 2.0);
-        }
 	};
 }
 

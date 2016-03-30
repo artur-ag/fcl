@@ -12,11 +12,9 @@ namespace fcl
 		memset(this, 0, sizeof(NewtonRaphsonStats));
 
 		// Set some default values
-        returnBest = true;
 		precision = 1e-6;
 		maxIterations = 30;
 		guessQuality = 6;
-		analytical = false;
 		parametric = false;
 		superellipsoid = true;
 		guessType = NewtonRaphsonStats::INITIAL_GUESS::PARAMETRIC_QUADTREE;
@@ -74,61 +72,5 @@ namespace fcl
 		nonMinimumDistance = (int)(1.0 * nonMinimumDistance / n);
 		didNotConverge = (int)(1.0 * didNotConverge / n);
 		discardedGuess = (int)(1.0 * discardedGuess / n);
-	}
-
-	void NewtonRaphsonStats::printHeader(std::ostream& out)
-	{
-		out <<
-			// In =======================================
-			"precision," <<
-			"maxIterations," <<
-			"guessQuality," <<
-			"returnBest," <<
-			"analytical," <<
-			"parametric," <<
-			"superellipsoid," <<
-			// Out ======================================
-			"guessType," <<
-			"iterations," <<
-			"setupTime," <<
-			"initialGuessTime," <<
-			"iterationsTime," <<
-			"numericalJacobianTime," <<
-			"totalTime," <<
-			"guessEstimations," <<
-			"nonMinimumDistance," <<
-			"discardedGuess," <<
-			"didNotConverge," <<
-			"guessA," <<
-			"guessB";
-	}
-	
-	std::ostream& operator<< (std::ostream& out, NewtonRaphsonStats& s)
-	{
-		out <<
-			// In =======================================
-			s.precision << "," <<
-			s.maxIterations << "," <<
-			s.guessQuality << "," <<
-			s.returnBest << "," <<
-			s.analytical << "," <<
-			s.parametric << "," <<
-			s.superellipsoid << "," <<
-			// Out ======================================
-			s.guessType << "," <<
-			s.iterations << "," <<
-			s.setupTime << "," <<
-			s.initialGuessTime << "," <<
-			s.iterationsTime << "," <<
-			s.numericalJacobianTime << "," <<
-			s.totalTime << "," <<
-			s.guessEstimations << "," <<
-			s.nonMinimumDistance << "," <<
-			s.discardedGuess << "," <<
-			s.didNotConverge << "," <<
-			s.getGuessA() << "," <<
-			s.getGuessB();
-
-		return out;
 	}
 }
