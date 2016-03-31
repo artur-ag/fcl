@@ -189,7 +189,7 @@ namespace fcl
             {
                 if (!useCachedGuesses)
                 {
-                    getParametricInitialGuess(s1, tf1, s2, tf2, qk, stats, useParametric);
+					getInitialGuess(s1, tf1, s2, tf2, qk, stats, useParametric);
                 }
                 else // if (useCachedGuesses)
                 {
