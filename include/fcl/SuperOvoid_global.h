@@ -42,12 +42,15 @@ namespace fcl
 	};
 
 
-	typedef struct NewtonRaphsonStats
+	struct NewtonRaphsonStats
 	{
 		// In
 		double precision;    // Tolerance for NewtonRaphson algorithm.
 		int maxIterations;   // Alg stops after this number of iterations even if 'precision' was not achieved.
 		int guessQuality;    // Either the number of cells in OcTree, or Parametric QuadTree.
+
+		bool returnBest;     // Alg returns the best result it found overall, if the last found iteration was worse.
+		bool analytical;     // True to use analytical jacobian matrices. False uses numerical w/ finite differences.
 		bool parametric;     // Parametric version of algorithm. If false, implicit version is used.
 		bool superellipsoid; // Allow superovoids with taperingX = taperingY = 0 to have simpler math expressions (faster)
 
@@ -81,12 +84,12 @@ namespace fcl
 		void add(const NewtonRaphsonStats& other);
 		void averageDivide(int n);
 
-        Vec3f getGuessA()
+        Vec3f getGuessA() const
         {
             return Vec3f(guessA[0], guessA[1], guessA[2]);
         }
 
-        Vec3f getGuessB()
+        Vec3f getGuessB() const
         {
             return Vec3f(guessB[0], guessB[1], guessB[2]);
         }
@@ -103,7 +106,11 @@ namespace fcl
                 << "Guess B: " << getGuessB() << std::endl;
         }
 
-	} NewtonRaphsonStats;
+		static void printHeader(std::ostream& out);
+
+		friend std::ostream& operator<< (std::ostream& out, NewtonRaphsonStats& s);
+		friend std::ostream& operator<< (std::ostream& out, const NewtonRaphsonStats& s);
+	};
 
 	// Global storage for the last collision detection using SuperOvoids
 	extern bool g_lastStatsValid;
