@@ -356,6 +356,11 @@ namespace fcl
 
 			return start + (value - start) % (end - start);
 		}
+
+		static inline FCL_REAL signpow(FCL_REAL a, FCL_REAL b)
+		{
+			return a * std::pow(std::pow(a, 2), (b - 1) / 2.0);
+		}
 	};
 }
 

@@ -1227,23 +1227,24 @@ namespace fcl
 		else if (zenith < (-pi / 2))
 			zenith -= pi;
 
+		FCL_REAL sinA = std::sin(azimuth),
+			sinZ = std::sin(zenith),
+			cosA = std::cos(azimuth),
+			cosZ = std::cos(zenith);
+
 		// Calculate coordinates
-		FCL_REAL z = (SIGN(std::sin(zenith))
-			* std::pow(std::abs(std::sin(zenith)), epsilon2))
-			* a3;
+		FCL_REAL z = signpow(sinZ, epsilon2) * a3;
 
 		FCL_REAL taperingFactorX = taperingX * z / a3 + 1;
 		FCL_REAL taperingFactorY = taperingY * z / a3 + 1;
 
-		FCL_REAL x = ((SIGN(std::cos(azimuth) * std::cos(zenith)))
-			* std::pow(std::abs(std::cos(azimuth)), epsilon1)
-			* std::pow(std::abs(std::cos(zenith)), epsilon2))
+		FCL_REAL x = signpow(cosA, epsilon1)
+			* signpow(cosZ, epsilon2)
 			* taperingFactorX
 			* a1;
 
-		FCL_REAL y = ((SIGN(std::sin(azimuth) * std::cos(zenith)))
-			* std::pow(std::abs(std::sin(azimuth)), epsilon1)
-			* std::pow(std::abs(std::cos(zenith)), epsilon2))
+		FCL_REAL y = signpow(sinA, epsilon1)
+			* signpow(cosZ, epsilon2)
 			* taperingFactorY
 			* a2;
 
