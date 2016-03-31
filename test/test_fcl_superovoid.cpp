@@ -9,6 +9,7 @@
 #include "fcl/shape/geometric_shapes.h"
 #include "fcl/shape/SuperOvoid.h"
 #include "fcl/shape/SuperOvoidDetails.h"
+#include "fcl/MuboPoseGenerator.h"
 
 using namespace fcl;
 
@@ -1008,4 +1009,93 @@ BOOST_AUTO_TEST_CASE(mesh_vs_unity)
 	}
 
 	delete unityVertices;
+}
+
+
+
+
+
+
+bool isGuessEqual(NewtonRaphsonStats stats1, NewtonRaphsonStats stats2)
+{
+	return
+		stats1.getGuessA().equal(stats2.getGuessA(), 1e-12)
+		&& stats1.getGuessB().equal(stats2.getGuessB(), 1e-12);
+}
+
+// Testing the implicit and parametric versions,
+// starting from the same initial guess, obtained
+// with the ParametricQuadtree method
+BOOST_AUTO_TEST_CASE(mubo_implicit_vs_parametric_same_guess)
+{
+	std::ofstream fileParametric;
+	fileParametric.open("mubo_parametric.csv");
+	std::ofstream fileImplicit;
+	fileImplicit.open("mubo_implicit.csv");
+
+	// Write header
+	fileParametric << "iteration,";
+	fileImplicit << "iteration,";
+	NewtonRaphsonStats::printHeader(fileParametric);
+	NewtonRaphsonStats::printHeader(fileImplicit);
+	fileParametric << std::endl;
+	fileImplicit << std::endl;
+
+	// Superovoid stuff
+	SuperOvoid sov1(1.4, 0.96, 1.2, 0.7, 0.5, 0.2, 0.3);
+	SuperOvoid sov2(1.1, 1.2, 1.0, 0.4, 1.1, 0.253, 0.243);
+
+	// Create superovoid objects, which are always the same
+	CollisionObject* s1 = getSuperOvoidObject(&sov1);
+	CollisionObject* s2 = getSuperOvoidObject(&sov2);
+
+	s1->setTranslation(Vec3f());
+	s2->setTranslation(Vec3f(4, 0, 0));
+
+	MuboPoseGenerator rand = MuboPoseGenerator();
+	rand.setSeed(1337);
+
+	for (int i = 0; i < 10000; i++)
+	{
+		rand.randomizeSuperovoid(sov1);
+		rand.randomizeSuperovoid(sov2);
+		rand.setRandomRotation(s1);
+		rand.setRandomRotation(s2);
+
+		g_lastStats.resetToDefault();
+		g_lastStatsValid = true;
+
+		// Use the same initial guess for both experiments
+		g_lastStats.guessType = NewtonRaphsonStats::PARAMETRIC_QUADTREE;
+
+		DistanceRequest request;
+		DistanceResult parametricResult, implicitResult;
+		NewtonRaphsonStats parametricStats, implicitStats;
+
+		// Experiment 1: parametric
+		sov1.clearCachedPoints();
+		sov2.clearCachedPoints();
+		request = DistanceRequest(true);
+		g_lastStats.parametric = true;
+		distance(s1, s2, request, parametricResult);
+		parametricStats = g_lastStats;
+
+		// Experiment 2: implicit
+		sov1.clearCachedPoints();
+		sov2.clearCachedPoints();
+		request = DistanceRequest(true);
+		g_lastStats.parametric = false;
+		distance(s1, s2, request, implicitResult);
+		implicitStats = g_lastStats;
+
+		// Write results
+		fileImplicit << i << "," << implicitStats << std::endl;
+		fileParametric << i << "," << parametricStats << std::endl;
+
+		//BOOST_CHECK(isGuessEqual(parametricStats, implicitStats));
+		//BOOST_CHECK(std::abs(parametricResult.min_distance - implicitResult.min_distance) < 1e-4);
+	}
+
+	fileParametric.close();
+	fileImplicit.close();
 }

@@ -387,7 +387,6 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="D:\Coding\FCL\fcl\include\fcl\math\transform.h" />
     <ClInclude Include="D:\Coding\FCL\fcl\include\fcl\math\vec_3f.h" />
     <ClInclude Include="D:\Coding\FCL\fcl\include\fcl\math\vec_nf.h" />
-    <ClInclude Include="D:\Coding\FCL\fcl\include\fcl\MuboPoseGenerator.h" />
     <ClInclude Include="D:\Coding\FCL\fcl\include\fcl\narrowphase\gjk.h" />
     <ClInclude Include="D:\Coding\FCL\fcl\include\fcl\narrowphase\gjk_libccd.h" />
     <ClInclude Include="D:\Coding\FCL\fcl\include\fcl\narrowphase\narrowphase.h" />
@@ -411,6 +410,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="D:\Coding\FCL\fcl\include\fcl\broadphase\broadphase_spatialhash.hxx" />
     <ClInclude Include="D:\Coding\FCL\fcl\include\fcl\broadphase\hierarchy_tree.hxx" />
     <ClInclude Include="D:\Coding\FCL\fcl\build\include\fcl\config.h" />
+    <ClCompile Include="..\..\src\MuboPoseGenerator.cpp" />
     <ClCompile Include="..\..\src\shape\jacobians.cpp" />
     <ClCompile Include="D:\Coding\FCL\fcl\src\articulated_model\joint.cpp" />
     <ClCompile Include="D:\Coding\FCL\fcl\src\articulated_model\joint_config.cpp" />
