@@ -1030,15 +1030,35 @@ BOOST_AUTO_TEST_CASE(mubo_implicit_vs_parametric_same_guess)
 {
 	std::ofstream fileParametric;
 	fileParametric.open("mubo_parametric.csv");
+	std::ofstream fileParametricAnalytical;
+	fileParametricAnalytical.open("mubo_parametric_analytical.csv");
 	std::ofstream fileImplicit;
 	fileImplicit.open("mubo_implicit.csv");
 
+	// Write info
+#ifdef _WIN32
+	char* osName = "Windows 32-bit";
+#elif _WIN64
+	char* osName = "Windows 64-bit";
+#elif __linux__
+	char* osName = "Linux";
+#else
+	char* osName = "Unknown OS";
+#endif
+
+	fileParametric << osName << std::endl;
+	fileParametricAnalytical << osName << std::endl;
+	fileImplicit << osName << std::endl;
+
 	// Write header
 	fileParametric << "iteration,";
+	fileParametricAnalytical << "iteration,";
 	fileImplicit << "iteration,";
 	NewtonRaphsonStats::printHeader(fileParametric);
+	NewtonRaphsonStats::printHeader(fileParametricAnalytical);
 	NewtonRaphsonStats::printHeader(fileImplicit);
 	fileParametric << std::endl;
+	fileParametricAnalytical << std::endl;
 	fileImplicit << std::endl;
 
 	// Superovoid stuff
@@ -1069,33 +1089,46 @@ BOOST_AUTO_TEST_CASE(mubo_implicit_vs_parametric_same_guess)
 		g_lastStats.guessType = NewtonRaphsonStats::PARAMETRIC_QUADTREE;
 
 		DistanceRequest request;
-		DistanceResult parametricResult, implicitResult;
-		NewtonRaphsonStats parametricStats, implicitStats;
+		DistanceResult parametricResult, parametricAnalyticalResult, implicitResult;
+		NewtonRaphsonStats parametricStats, parametricAnalyticalStats, implicitStats;
 
-		// Experiment 1: parametric
+		// Experiment 1: parametric numerical
 		sov1.clearCachedPoints();
 		sov2.clearCachedPoints();
 		request = DistanceRequest(true);
 		g_lastStats.parametric = true;
+		g_lastStats.analytical = false;
 		distance(s1, s2, request, parametricResult);
 		parametricStats = g_lastStats;
 
-		// Experiment 2: implicit
+		// Experiment 2: parametric analytical
+		sov1.clearCachedPoints();
+		sov2.clearCachedPoints();
+		request = DistanceRequest(true);
+		g_lastStats.parametric = true;
+		g_lastStats.analytical = true;
+		distance(s1, s2, request, parametricAnalyticalResult);
+		parametricAnalyticalStats = g_lastStats;
+
+		// Experiment 3: implicit numerical
 		sov1.clearCachedPoints();
 		sov2.clearCachedPoints();
 		request = DistanceRequest(true);
 		g_lastStats.parametric = false;
+		g_lastStats.analytical = false;
 		distance(s1, s2, request, implicitResult);
 		implicitStats = g_lastStats;
 
 		// Write results
 		fileImplicit << i << "," << implicitStats << std::endl;
 		fileParametric << i << "," << parametricStats << std::endl;
+		fileParametricAnalytical << i << "," << parametricAnalyticalStats << std::endl;
 
 		//BOOST_CHECK(isGuessEqual(parametricStats, implicitStats));
 		//BOOST_CHECK(std::abs(parametricResult.min_distance - implicitResult.min_distance) < 1e-4);
 	}
 
 	fileParametric.close();
+	fileParametricAnalytical.close();
 	fileImplicit.close();
 }
