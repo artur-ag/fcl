@@ -143,6 +143,15 @@ namespace fcl
 		Vec3f getNormal(Vec3f point) const;
 		Vec3f getNormal(FCL_REAL azimuth, FCL_REAL zenith, bool useEquallySpacedTransform) const;
 
+		Vec3f getAzimuthTangent(FCL_REAL azimuth, FCL_REAL zenith) const;
+		Vec3f getZenithTangent(FCL_REAL azimuth, FCL_REAL zenith) const;
+		Vec3f getAzimuthTangentDerivativePhi1(FCL_REAL phi1, FCL_REAL phi2) const;
+		Vec3f getAzimuthTangentDerivativePhi2(FCL_REAL phi1, FCL_REAL phi2) const;
+		Vec3f getZenithTangentDerivativePhi1(FCL_REAL phi1, FCL_REAL phi2) const;
+		Vec3f getZenithTangentDerivativePhi2(FCL_REAL phi1, FCL_REAL phi2) const;
+		Vec3f getNormalDerivativePhi1(FCL_REAL phi1, FCL_REAL phi2) const;
+		Vec3f getNormalDerivativePhi2(FCL_REAL phi1, FCL_REAL phi2) const;
+
 		void computeLocalOctree(FCL_REAL size)
 		{
             FCL_REAL minLength = std::min(std::min(a1, a2), a3);
