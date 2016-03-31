@@ -391,7 +391,12 @@ namespace fcl
                 Timer jacobianTimer = Timer();
                 jacobianTimer.start();
 
-				bool validJacobian = getNumericalJacobian(size, s1, tf1, s2, tf2, function, qk, jacobian);
+				bool validJacobian;
+
+				if (size == 4 && stats->analytical == true)
+					validJacobian = getAnalyticalParametricJacobian(s1, tf1, s2, tf2, qk, jacobian);
+				else
+					validJacobian = getNumericalJacobian(size, s1, tf1, s2, tf2, function, qk, jacobian);
 
                 jacobianTimer.stop();
                 if (stats != NULL)
@@ -1300,7 +1305,7 @@ namespace fcl
 	}
 
 	/// @brief Get local normal direction at a given set of coordinates on the surface of the superovoid (in radians). Normalized.
-	Vec3f SuperOvoid::getNormal(FCL_REAL azimuth, FCL_REAL zenith, bool useEquallySpacedTransform = false) const
+	Vec3f SuperOvoid::getNormal(FCL_REAL azimuth, FCL_REAL zenith, bool useEquallySpacedTransform) const
 	{
 		// Adjust parameters so that vertices are almost equally spaced, it's prettier
 		if (useEquallySpacedTransform)

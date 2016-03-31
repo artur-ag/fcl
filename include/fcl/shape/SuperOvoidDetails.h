@@ -23,6 +23,11 @@ namespace fcl
 			const SuperOvoid& s1, const Transform3f& tf1, const SuperOvoid& s2, const Transform3f& tf2,
 			void(*function)(const SuperOvoid& s1, const Transform3f& tf1, const SuperOvoid& s2, const Transform3f& tf2, FCL_REAL* qk, FCL_REAL phi[6]),
 			FCL_REAL* qk, FCL_REAL* jacobian);
+
+		bool getAnalyticalParametricJacobian(
+			const SuperOvoid& s1, const Transform3f& tf1, const SuperOvoid& s2, const Transform3f& tf2,
+			FCL_REAL* qk, FCL_REAL* jacobian);
+
 		}
 }
 

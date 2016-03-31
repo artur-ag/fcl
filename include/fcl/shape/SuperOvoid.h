@@ -139,9 +139,9 @@ namespace fcl
 
 		inline FCL_REAL implicitFunction(Vec3f point) const;
 		FCL_REAL implicitFunction(FCL_REAL x, FCL_REAL y, FCL_REAL z) const;
-		void SuperOvoid::getPoint(Vec3f* target, FCL_REAL azimuth, FCL_REAL zenith, bool equallySpaced) const;
+		void getPoint(Vec3f* target, FCL_REAL azimuth, FCL_REAL zenith, bool equallySpaced = false) const;
 		Vec3f getNormal(Vec3f point) const;
-		Vec3f getNormal(FCL_REAL azimuth, FCL_REAL zenith, bool useEquallySpacedTransform) const;
+		Vec3f getNormal(FCL_REAL azimuth, FCL_REAL zenith, bool useEquallySpacedTransform = false) const;
 
 		Vec3f getAzimuthTangent(FCL_REAL azimuth, FCL_REAL zenith) const;
 		Vec3f getZenithTangent(FCL_REAL azimuth, FCL_REAL zenith) const;
@@ -212,7 +212,7 @@ namespace fcl
 	public:
 
 
-		Vec3f getPoint(FCL_REAL azimuth, FCL_REAL zenith, bool equallySpaced) const
+		Vec3f getPoint(FCL_REAL azimuth, FCL_REAL zenith, bool equallySpaced = false) const
 		{
 			Vec3f target;
 			getPoint(&target, azimuth, zenith, equallySpaced);
