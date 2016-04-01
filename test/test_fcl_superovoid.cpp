@@ -1034,6 +1034,8 @@ BOOST_AUTO_TEST_CASE(mubo_implicit_vs_parametric_same_guess)
 	fileHybrid.open("mubo_hybrid.csv");
 	std::ofstream fileImplicit;
 	fileImplicit.open("mubo_implicit.csv");
+	std::ofstream fileMesh;
+	fileMesh.open("mubo_mesh.csv");
 
 	// Write info
 #ifdef _WIN32
@@ -1049,17 +1051,21 @@ BOOST_AUTO_TEST_CASE(mubo_implicit_vs_parametric_same_guess)
 	fileParametric << osName << std::endl;
 	fileHybrid << osName << std::endl;
 	fileImplicit << osName << std::endl;
+	fileMesh << osName << std::endl;
 
 	// Write header
 	fileParametric << "iteration,";
 	fileHybrid << "iteration,";
 	fileImplicit << "iteration,";
+	fileMesh << "iteration,";
 	NewtonRaphsonStats::printHeader(fileParametric);
 	NewtonRaphsonStats::printHeader(fileHybrid);
 	NewtonRaphsonStats::printHeader(fileImplicit);
+	fileMesh << "totalTime";
 	fileParametric << std::endl;
 	fileHybrid << std::endl;
 	fileImplicit << std::endl;
+	fileMesh << std::endl;
 
 	// Superovoid stuff
 	SuperOvoid sov1(1.4, 0.96, 1.2, 0.7, 0.5, 0.2, 0.3);
@@ -1068,6 +1074,9 @@ BOOST_AUTO_TEST_CASE(mubo_implicit_vs_parametric_same_guess)
 	// Create superovoid objects, which are always the same
 	CollisionObject* s1 = getSuperOvoidObject(&sov1);
 	CollisionObject* s2 = getSuperOvoidObject(&sov2);
+
+	int azSlices = 16;
+	int zeSlices = 21;
 
 	s1->setTranslation(Vec3f());
 	s2->setTranslation(Vec3f(4, 0, 0));
@@ -1082,6 +1091,14 @@ BOOST_AUTO_TEST_CASE(mubo_implicit_vs_parametric_same_guess)
 		rand.setRandomRotation(s1);
 		rand.setRandomRotation(s2);
 
+		// Create meshes equivalent to superovoids
+		CollisionObject* mesh1 = getSuperOvoidMeshObject(sov1, azSlices, zeSlices, true);
+		CollisionObject* mesh2 = getSuperOvoidMeshObject(sov2, azSlices, zeSlices, true);
+		mesh1->setTranslation(Vec3f());
+		mesh2->setTranslation(Vec3f(4, 0, 0));
+		mesh1->setQuatRotation(s1->getQuatRotation());
+		mesh2->setQuatRotation(s2->getQuatRotation());
+			
 		g_lastStats.resetToDefault();
 		g_lastStatsValid = true;
 
@@ -1089,7 +1106,7 @@ BOOST_AUTO_TEST_CASE(mubo_implicit_vs_parametric_same_guess)
 		g_lastStats.guessType = NewtonRaphsonStats::PARAMETRIC_QUADTREE;
 
 		DistanceRequest request;
-		DistanceResult parametricResult, hybridResult, implicitResult;
+		DistanceResult parametricResult, hybridResult, implicitResult, meshResult;
 		NewtonRaphsonStats parametricStats, hybridStats, implicitStats;
 
 		// Experiment 1: parametric numerical
@@ -1119,10 +1136,18 @@ BOOST_AUTO_TEST_CASE(mubo_implicit_vs_parametric_same_guess)
 		distance(s1, s2, request, implicitResult);
 		implicitStats = g_lastStats;
 
+		Timer meshTimer = Timer();
+		meshTimer.start();
+		// Experiment 4: meshes
+		request = DistanceRequest(true);
+		distance(mesh1, mesh2, request, meshResult);
+		meshTimer.stop();
+
 		// Write results
 		fileImplicit << i << "," << implicitStats << std::endl;
 		fileParametric << i << "," << parametricStats << std::endl;
 		fileHybrid << i << "," << hybridStats << std::endl;
+		fileMesh << i << "," << meshTimer.getElapsedTimeInMicroSec() << std::endl;
 
 		//BOOST_CHECK(isGuessEqual(parametricStats, implicitStats));
 		//BOOST_CHECK(std::abs(parametricResult.min_distance - implicitResult.min_distance) < 1e-4);
@@ -1131,4 +1156,5 @@ BOOST_AUTO_TEST_CASE(mubo_implicit_vs_parametric_same_guess)
 	fileParametric.close();
 	fileHybrid.close();
 	fileImplicit.close();
+	fileMesh.close();
 }
