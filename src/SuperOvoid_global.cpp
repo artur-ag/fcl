@@ -18,6 +18,7 @@ namespace fcl
 		guessQuality = 6;
 		analytical = false;
 		parametric = false;
+		forceImplicitNormals = false;
 		superellipsoid = true;
 		guessType = NewtonRaphsonStats::INITIAL_GUESS::PARAMETRIC_QUADTREE;
 	}
@@ -87,6 +88,7 @@ namespace fcl
 			"returnBest," <<
 			"analytical," <<
 			"parametric," <<
+			"forceImplicitNormals," <<
 			"superellipsoid," <<
 			// Out ======================================
 			"guessType," <<
@@ -115,6 +117,7 @@ namespace fcl
 			s.returnBest << "," <<
 			s.analytical << "," <<
 			s.parametric << "," <<
+			s.forceImplicitNormals << "," <<
 			s.superellipsoid << "," <<
 			// Out ======================================
 			s.guessType << "," <<

@@ -1320,13 +1320,18 @@ namespace fcl
 
 		if (_isOvoid)
 		{
-			// This uses the implicit formula
-			//Vec3f point;
-			//getPoint(&point, azimuth, zenith, false);
-			//return getNormal(point);
-
-			// This is the purely-parametric formula
-			return getAzimuthTangent(azimuth, zenith).cross(getZenithTangent(azimuth, zenith)).normalize();
+			if (g_lastStatsValid && g_lastStats.forceImplicitNormals)
+			{
+				// This uses the implicit formula
+				Vec3f point;
+				getPoint(&point, azimuth, zenith, false);
+				return getNormal(point);
+			}
+			else
+			{
+				// This is the purely-parametric formula
+				return getAzimuthTangent(azimuth, zenith).cross(getZenithTangent(azimuth, zenith)).normalize();
+			}
 		}
 		else
 		{

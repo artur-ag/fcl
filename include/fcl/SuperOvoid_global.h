@@ -52,6 +52,7 @@ namespace fcl
 		bool returnBest;     // Alg returns the best result it found overall, if the last found iteration was worse.
 		bool analytical;     // True to use analytical jacobian matrices. False uses numerical w/ finite differences.
 		bool parametric;     // Parametric version of algorithm. If false, implicit version is used.
+		bool forceImplicitNormals; // Uses implicit formula for normals even when parametric = true.
 		bool superellipsoid; // Allow superovoids with taperingX = taperingY = 0 to have simpler math expressions (faster)
 
 		enum INITIAL_GUESS { AVG_SPHERE, OCTREE, OBB, MESH, PARAMETRIC_QUADTREE };

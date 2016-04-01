@@ -1030,8 +1030,8 @@ BOOST_AUTO_TEST_CASE(mubo_implicit_vs_parametric_same_guess)
 {
 	std::ofstream fileParametric;
 	fileParametric.open("mubo_parametric.csv");
-	std::ofstream fileParametricAnalytical;
-	fileParametricAnalytical.open("mubo_parametric_analytical.csv");
+	std::ofstream fileHybrid;
+	fileHybrid.open("mubo_hybrid.csv");
 	std::ofstream fileImplicit;
 	fileImplicit.open("mubo_implicit.csv");
 
@@ -1047,18 +1047,18 @@ BOOST_AUTO_TEST_CASE(mubo_implicit_vs_parametric_same_guess)
 #endif
 
 	fileParametric << osName << std::endl;
-	fileParametricAnalytical << osName << std::endl;
+	fileHybrid << osName << std::endl;
 	fileImplicit << osName << std::endl;
 
 	// Write header
 	fileParametric << "iteration,";
-	fileParametricAnalytical << "iteration,";
+	fileHybrid << "iteration,";
 	fileImplicit << "iteration,";
 	NewtonRaphsonStats::printHeader(fileParametric);
-	NewtonRaphsonStats::printHeader(fileParametricAnalytical);
+	NewtonRaphsonStats::printHeader(fileHybrid);
 	NewtonRaphsonStats::printHeader(fileImplicit);
 	fileParametric << std::endl;
-	fileParametricAnalytical << std::endl;
+	fileHybrid << std::endl;
 	fileImplicit << std::endl;
 
 	// Superovoid stuff
@@ -1075,7 +1075,7 @@ BOOST_AUTO_TEST_CASE(mubo_implicit_vs_parametric_same_guess)
 	MuboPoseGenerator rand = MuboPoseGenerator();
 	rand.setSeed(1337);
 
-	for (int i = 0; i < 10000; i++)
+	for (int i = 0; i < 100; i++)
 	{
 		rand.randomizeSuperovoid(sov1);
 		rand.randomizeSuperovoid(sov2);
@@ -1089,46 +1089,46 @@ BOOST_AUTO_TEST_CASE(mubo_implicit_vs_parametric_same_guess)
 		g_lastStats.guessType = NewtonRaphsonStats::PARAMETRIC_QUADTREE;
 
 		DistanceRequest request;
-		DistanceResult parametricResult, parametricAnalyticalResult, implicitResult;
-		NewtonRaphsonStats parametricStats, parametricAnalyticalStats, implicitStats;
+		DistanceResult parametricResult, hybridResult, implicitResult;
+		NewtonRaphsonStats parametricStats, hybridStats, implicitStats;
 
 		// Experiment 1: parametric numerical
 		sov1.clearCachedPoints();
 		sov2.clearCachedPoints();
 		request = DistanceRequest(true);
 		g_lastStats.parametric = true;
-		g_lastStats.analytical = false;
+		g_lastStats.forceImplicitNormals = false;
 		distance(s1, s2, request, parametricResult);
 		parametricStats = g_lastStats;
 
-		// Experiment 2: parametric analytical
+		// Experiment 2: hybrid (parametric with implicit normals)
 		sov1.clearCachedPoints();
 		sov2.clearCachedPoints();
 		request = DistanceRequest(true);
 		g_lastStats.parametric = true;
-		g_lastStats.analytical = true;
-		distance(s1, s2, request, parametricAnalyticalResult);
-		parametricAnalyticalStats = g_lastStats;
+		g_lastStats.forceImplicitNormals = true;
+		distance(s1, s2, request, hybridResult);
+		hybridStats = g_lastStats;
 
 		// Experiment 3: implicit numerical
 		sov1.clearCachedPoints();
 		sov2.clearCachedPoints();
 		request = DistanceRequest(true);
 		g_lastStats.parametric = false;
-		g_lastStats.analytical = false;
+		g_lastStats.forceImplicitNormals = false;
 		distance(s1, s2, request, implicitResult);
 		implicitStats = g_lastStats;
 
 		// Write results
 		fileImplicit << i << "," << implicitStats << std::endl;
 		fileParametric << i << "," << parametricStats << std::endl;
-		fileParametricAnalytical << i << "," << parametricAnalyticalStats << std::endl;
+		fileHybrid << i << "," << hybridStats << std::endl;
 
 		//BOOST_CHECK(isGuessEqual(parametricStats, implicitStats));
 		//BOOST_CHECK(std::abs(parametricResult.min_distance - implicitResult.min_distance) < 1e-4);
 	}
 
 	fileParametric.close();
-	fileParametricAnalytical.close();
+	fileHybrid.close();
 	fileImplicit.close();
 }
