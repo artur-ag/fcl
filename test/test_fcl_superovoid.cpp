@@ -1023,6 +1023,11 @@ bool isGuessEqual(NewtonRaphsonStats stats1, NewtonRaphsonStats stats2)
 		&& stats1.getGuessB().equal(stats2.getGuessB(), 1e-12);
 }
 
+void writeNearestPoints(std::ostream& file, const DistanceResult& result)
+{
+	file << "," << result.nearest_points[0] << "," << result.nearest_points[1];
+}
+
 // Testing the implicit and parametric versions,
 // starting from the same initial guess, obtained
 // with the ParametricQuadtree method
@@ -1039,13 +1044,13 @@ BOOST_AUTO_TEST_CASE(mubo_implicit_vs_parametric_same_guess)
 
 	// Write info
 #ifdef _WIN32
-	char* osName = "Windows 32-bit";
+	char osName[32] = "Windows 32-bit";
 #elif _WIN64
-	char* osName = "Windows 64-bit";
+	char osName[32] = "Windows 64-bit";
 #elif __linux__
-	char* osName = "Linux";
+	char osName[32] = "Linux";
 #else
-	char* osName = "Unknown OS";
+	char osName[32] = "Unknown OS";
 #endif
 
 	fileParametric << osName << std::endl;
@@ -1062,10 +1067,12 @@ BOOST_AUTO_TEST_CASE(mubo_implicit_vs_parametric_same_guess)
 	NewtonRaphsonStats::printHeader(fileHybrid);
 	NewtonRaphsonStats::printHeader(fileImplicit);
 	fileMesh << "totalTime";
-	fileParametric << std::endl;
-	fileHybrid << std::endl;
-	fileImplicit << std::endl;
-	fileMesh << std::endl;
+	
+	char extras[10] = ",P,Q";
+	fileParametric << extras << std::endl;
+	fileHybrid << extras << std::endl;
+	fileImplicit << extras << std::endl;
+	fileMesh << extras << std::endl;
 
 	// Superovoid stuff
 	SuperOvoid sov1(1.4, 0.96, 1.2, 0.7, 0.5, 0.2, 0.3);
@@ -1143,11 +1150,26 @@ BOOST_AUTO_TEST_CASE(mubo_implicit_vs_parametric_same_guess)
 		distance(mesh1, mesh2, request, meshResult);
 		meshTimer.stop();
 
+		delete mesh1;
+		delete mesh2;
+
 		// Write results
-		fileImplicit << i << "," << implicitStats << std::endl;
-		fileParametric << i << "," << parametricStats << std::endl;
-		fileHybrid << i << "," << hybridStats << std::endl;
-		fileMesh << i << "," << meshTimer.getElapsedTimeInMicroSec() << std::endl;
+		fileImplicit << i << "," << implicitStats;
+		fileParametric << i << "," << parametricStats;
+		fileHybrid << i << "," << hybridStats;
+		fileMesh << i << "," << meshTimer.getElapsedTimeInMicroSec();
+
+		// Write closest points
+		writeNearestPoints(fileImplicit, implicitResult);
+		writeNearestPoints(fileParametric, parametricResult);
+		writeNearestPoints(fileHybrid, hybridResult);
+		writeNearestPoints(fileMesh, meshResult);
+
+		// End line
+		fileImplicit   << std::endl;
+		fileParametric << std::endl;
+		fileHybrid     << std::endl;
+		fileMesh       << std::endl;
 
 		//BOOST_CHECK(isGuessEqual(parametricStats, implicitStats));
 		//BOOST_CHECK(std::abs(parametricResult.min_distance - implicitResult.min_distance) < 1e-4);
