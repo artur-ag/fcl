@@ -1,0 +1,438 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\BV\AABB.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\BV\OBB.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\BV\OBBRSS.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\BV\RSS.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\BV\kDOP.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\BV\kIOS.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\BVH\BVH_model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\BVH\BVH_utility.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\BVH\BV_fitter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\BVH\BV_splitter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\articulated_model\joint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\articulated_model\joint_config.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\articulated_model\link.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\articulated_model\model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\articulated_model\model_config.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\broadphase\broadphase_SSaP.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\broadphase\broadphase_SaP.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\broadphase\broadphase_bruteforce.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\broadphase\broadphase_dynamic_AABB_tree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\broadphase\broadphase_dynamic_AABB_tree_array.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\broadphase\broadphase_interval_tree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\broadphase\broadphase_spatialhash.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\broadphase\hierarchy_tree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\broadphase\interval_tree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\ccd\conservative_advancement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\ccd\interpolation\interpolation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\ccd\interpolation\interpolation_factory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\ccd\interpolation\interpolation_linear.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\ccd\interval.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\ccd\interval_matrix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\ccd\interval_vector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\ccd\motion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\ccd\taylor_matrix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\ccd\taylor_model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\ccd\taylor_vector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\collision.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\collision_data.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\collision_func_matrix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\collision_node.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\continuous_collision.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\distance.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\distance_func_matrix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\intersect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\math\sampling.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\math\transform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\narrowphase\gjk.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\narrowphase\gjk_libccd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\narrowphase\narrowphase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\profile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\shape\geometric_shapes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\shape\geometric_shapes_utility.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\traversal\traversal_node_base.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\traversal\traversal_node_bvhs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\traversal\traversal_node_setup.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\traversal\traversal_recurse.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\BV\AABB.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\BV\BV.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\BV\BV_node.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\BV\OBB.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\BV\OBBRSS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\BV\RSS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\BV\kDOP.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\BV\kIOS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\BVH\BVH_front.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\BVH\BVH_internal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\BVH\BVH_model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\BVH\BVH_utility.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\BVH\BV_fitter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\BVH\BV_splitter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\articulated_model\joint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\articulated_model\joint_config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\articulated_model\link.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\articulated_model\model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\articulated_model\model_config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\broadphase\broadphase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\broadphase\broadphase_SSaP.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\broadphase\broadphase_SaP.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\broadphase\broadphase_bruteforce.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\broadphase\broadphase_dynamic_AABB_tree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\broadphase\broadphase_dynamic_AABB_tree_array.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\broadphase\broadphase_interval_tree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\broadphase\broadphase_spatialhash.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\broadphase\hash.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\broadphase\hierarchy_tree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\broadphase\interval_tree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\broadphase\morton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\ccd\conservative_advancement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\ccd\interpolation\interpolation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\ccd\interpolation\interpolation_factory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\ccd\interpolation\interpolation_linear.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\ccd\interval.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\ccd\interval_matrix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\ccd\interval_vector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\ccd\motion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\ccd\motion_base.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\ccd\simplex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\ccd\support.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\ccd\taylor_matrix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\ccd\taylor_model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\ccd\taylor_vector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\collision.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\collision_data.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\collision_func_matrix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\collision_node.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\collision_object.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\continuous_collision.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\data_types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\deprecated.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\distance.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\distance_func_matrix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\exception.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\intersect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\learning\classifier.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\math\constants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\math\math_details.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\math\matrix_3f.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\math\sampling.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\math\transform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\math\vec_3f.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\math\vec_nf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\narrowphase\gjk.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\narrowphase\gjk_libccd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\narrowphase\narrowphase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\octree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\profile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\shape\geometric_shape_to_BVH_model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\shape\geometric_shapes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\shape\geometric_shapes_utility.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\simd\math_simd_details.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\simd\simd_intersect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\traversal\traversal_node_base.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\traversal\traversal_node_bvh_shape.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\traversal\traversal_node_bvhs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\traversal\traversal_node_octree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\traversal\traversal_node_setup.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\traversal\traversal_node_shapes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\traversal\traversal_recurse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\broadphase\broadphase_spatialhash.hxx">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\broadphase\hierarchy_tree.hxx">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\vsbuild\include\fcl\config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="F:\Coding\FCL\newfcl\fcl\src\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{036B5E71-FAF8-3E01-9360-44C636E000F0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{543B4D05-45D9-33FC-A8CC-A62D889B3584}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,659 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|Win32">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|Win32">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGUID>{50745070-D414-3745-ABAC-31EB813433DE}</ProjectGUID>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>Win32</Platform>
+    <ProjectName>fcl</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">F:\Coding\FCL\newfcl\fcl\vsbuild\lib\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">fcl.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">fcl</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">fcl</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.lib</TargetExt>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">F:\Coding\FCL\newfcl\fcl\vsbuild\lib\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">fcl.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">fcl</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">fcl</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.lib</TargetExt>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">F:\Coding\FCL\newfcl\fcl\vsbuild\lib\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">fcl.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">fcl</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">fcl</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">.lib</TargetExt>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">F:\Coding\FCL\newfcl\fcl\vsbuild\lib\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">fcl.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">fcl</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">fcl</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">.lib</TargetExt>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>F:\Coding\FCL\newfcl\fcl\include;F:\Coding\FCL\newfcl\fcl\vsbuild\include;F:\Coding\FCL\newfcl\libccd\vsbuild\Release;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>Debug/</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level1</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>F:\Coding\FCL\newfcl\fcl\include;F:\Coding\FCL\newfcl\fcl\vsbuild\include;F:\Coding\FCL\newfcl\libccd\vsbuild\Release;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>F:\Coding\FCL\newfcl\fcl\include;F:\Coding\FCL\newfcl\fcl\vsbuild\include;F:\Coding\FCL\newfcl\libccd\vsbuild\Release;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions> /machine:X86 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>ccd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>F:\Coding\FCL\newfcl\libccd\vsbuild\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+    <ProjectReference>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>F:\Coding\FCL\newfcl\lapack\x64\include;F:\Coding\FCL\newfcl\fcl\include;F:\Coding\FCL\newfcl\fcl\vsbuild\include;F:\Coding\FCL\newfcl\libccd\vsbuild\Release;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>Debug/</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level1</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;CMAKE_INTDIR="Debug";HAVE_LAPACK_CONFIG_H;LAPACK_COMPLEX_STRUCTURE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>F:\Coding\FCL\newfcl\fcl\include;F:\Coding\FCL\newfcl\fcl\vsbuild\include;F:\Coding\FCL\newfcl\libccd\vsbuild\Release;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>F:\Coding\FCL\newfcl\fcl\include;F:\Coding\FCL\newfcl\fcl\vsbuild\include;F:\Coding\FCL\newfcl\libccd\vsbuild\Release;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>ccd.lib;liblapacke.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>F:\Coding\FCL\newfcl\lapack\x64\;F:\Coding\FCL\newfcl\libccd\vsbuild\Release;F:\Coding\FCL\newfcl\libccd\vsbuild\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+    <ProjectReference>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>F:\Coding\FCL\newfcl\fcl\include;F:\Coding\FCL\newfcl\fcl\vsbuild\include;F:\Coding\FCL\newfcl\libccd\vsbuild\Release;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>Release/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level1</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>F:\Coding\FCL\newfcl\fcl\include;F:\Coding\FCL\newfcl\fcl\vsbuild\include;F:\Coding\FCL\newfcl\libccd\vsbuild\Release;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>F:\Coding\FCL\newfcl\fcl\include;F:\Coding\FCL\newfcl\fcl\vsbuild\include;F:\Coding\FCL\newfcl\libccd\vsbuild\Release;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions> /machine:X86 %(AdditionalOptions)</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>F:\Coding\FCL\newfcl\fcl\include;F:\Coding\FCL\newfcl\fcl\vsbuild\include;F:\Coding\FCL\newfcl\libccd\vsbuild\Release;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>Release/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level1</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>F:\Coding\FCL\newfcl\fcl\include;F:\Coding\FCL\newfcl\fcl\vsbuild\include;F:\Coding\FCL\newfcl\libccd\vsbuild\Release;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>F:\Coding\FCL\newfcl\fcl\include;F:\Coding\FCL\newfcl\fcl\vsbuild\include;F:\Coding\FCL\newfcl\libccd\vsbuild\Release;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions> /machine:X86 %(AdditionalOptions)</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>F:\Coding\FCL\newfcl\fcl\include;F:\Coding\FCL\newfcl\fcl\vsbuild\include;F:\Coding\FCL\newfcl\libccd\vsbuild\Release;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>MinSizeRel/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level1</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="MinSizeRel";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>F:\Coding\FCL\newfcl\fcl\include;F:\Coding\FCL\newfcl\fcl\vsbuild\include;F:\Coding\FCL\newfcl\libccd\vsbuild\Release;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>F:\Coding\FCL\newfcl\fcl\include;F:\Coding\FCL\newfcl\fcl\vsbuild\include;F:\Coding\FCL\newfcl\libccd\vsbuild\Release;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions> /machine:X86 %(AdditionalOptions)</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>F:\Coding\FCL\newfcl\fcl\include;F:\Coding\FCL\newfcl\fcl\vsbuild\include;F:\Coding\FCL\newfcl\libccd\vsbuild\Release;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>MinSizeRel/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level1</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="MinSizeRel";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>F:\Coding\FCL\newfcl\fcl\include;F:\Coding\FCL\newfcl\fcl\vsbuild\include;F:\Coding\FCL\newfcl\libccd\vsbuild\Release;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>F:\Coding\FCL\newfcl\fcl\include;F:\Coding\FCL\newfcl\fcl\vsbuild\include;F:\Coding\FCL\newfcl\libccd\vsbuild\Release;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions> /machine:X86 %(AdditionalOptions)</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>F:\Coding\FCL\newfcl\fcl\include;F:\Coding\FCL\newfcl\fcl\vsbuild\include;F:\Coding\FCL\newfcl\libccd\vsbuild\Release;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>RelWithDebInfo/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level1</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="RelWithDebInfo";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>F:\Coding\FCL\newfcl\fcl\include;F:\Coding\FCL\newfcl\fcl\vsbuild\include;F:\Coding\FCL\newfcl\libccd\vsbuild\Release;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>F:\Coding\FCL\newfcl\fcl\include;F:\Coding\FCL\newfcl\fcl\vsbuild\include;F:\Coding\FCL\newfcl\libccd\vsbuild\Release;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions> /machine:X86 %(AdditionalOptions)</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>F:\Coding\FCL\newfcl\fcl\include;F:\Coding\FCL\newfcl\fcl\vsbuild\include;F:\Coding\FCL\newfcl\libccd\vsbuild\Release;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>RelWithDebInfo/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level1</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="RelWithDebInfo";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>F:\Coding\FCL\newfcl\fcl\include;F:\Coding\FCL\newfcl\fcl\vsbuild\include;F:\Coding\FCL\newfcl\libccd\vsbuild\Release;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>F:\Coding\FCL\newfcl\fcl\include;F:\Coding\FCL\newfcl\fcl\vsbuild\include;F:\Coding\FCL\newfcl\libccd\vsbuild\Release;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions> /machine:X86 %(AdditionalOptions)</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="F:\Coding\FCL\newfcl\fcl\src\CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Building Custom Rule F:/Coding/FCL/newfcl/fcl/src/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule F:/Coding/FCL/newfcl/fcl/src/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -HF:/Coding/FCL/newfcl/fcl -BF:/Coding/FCL/newfcl/fcl/vsbuild --check-stamp-file F:\Coding\FCL\newfcl\fcl\vsbuild\src\CMakeFiles\generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -HF:/Coding/FCL/newfcl/fcl -BF:/Coding/FCL/newfcl/fcl/vsbuild --check-stamp-file F:\Coding\FCL\newfcl\fcl\vsbuild\src\CMakeFiles\generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">F:/Coding/FCL/newfcl/fcl/src/CMakeLists.txt;F:\Coding\FCL\newfcl\fcl\src\CMakeLists.txt;F:\Coding\FCL\newfcl\fcl\src\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">F:/Coding/FCL/newfcl/fcl/src/CMakeLists.txt;F:\Coding\FCL\newfcl\fcl\src\CMakeLists.txt;F:\Coding\FCL\newfcl\fcl\src\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">F:\Coding\FCL\newfcl\fcl\vsbuild\src\CMakeFiles\generate.stamp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">F:\Coding\FCL\newfcl\fcl\vsbuild\src\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Building Custom Rule F:/Coding/FCL/newfcl/fcl/src/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule F:/Coding/FCL/newfcl/fcl/src/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -HF:/Coding/FCL/newfcl/fcl -BF:/Coding/FCL/newfcl/fcl/vsbuild --check-stamp-file F:\Coding\FCL\newfcl\fcl\vsbuild\src\CMakeFiles\generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -HF:/Coding/FCL/newfcl/fcl -BF:/Coding/FCL/newfcl/fcl/vsbuild --check-stamp-file F:\Coding\FCL\newfcl\fcl\vsbuild\src\CMakeFiles\generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">F:/Coding/FCL/newfcl/fcl/src/CMakeLists.txt;F:\Coding\FCL\newfcl\fcl\src\CMakeLists.txt;F:\Coding\FCL\newfcl\fcl\src\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">F:/Coding/FCL/newfcl/fcl/src/CMakeLists.txt;F:\Coding\FCL\newfcl\fcl\src\CMakeLists.txt;F:\Coding\FCL\newfcl\fcl\src\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">F:\Coding\FCL\newfcl\fcl\vsbuild\src\CMakeFiles\generate.stamp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">F:\Coding\FCL\newfcl\fcl\vsbuild\src\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">Building Custom Rule F:/Coding/FCL/newfcl/fcl/src/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule F:/Coding/FCL/newfcl/fcl/src/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -HF:/Coding/FCL/newfcl/fcl -BF:/Coding/FCL/newfcl/fcl/vsbuild --check-stamp-file F:\Coding\FCL\newfcl\fcl\vsbuild\src\CMakeFiles\generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -HF:/Coding/FCL/newfcl/fcl -BF:/Coding/FCL/newfcl/fcl/vsbuild --check-stamp-file F:\Coding\FCL\newfcl\fcl\vsbuild\src\CMakeFiles\generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">F:/Coding/FCL/newfcl/fcl/src/CMakeLists.txt;F:\Coding\FCL\newfcl\fcl\src\CMakeLists.txt;F:\Coding\FCL\newfcl\fcl\src\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">F:/Coding/FCL/newfcl/fcl/src/CMakeLists.txt;F:\Coding\FCL\newfcl\fcl\src\CMakeLists.txt;F:\Coding\FCL\newfcl\fcl\src\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">F:\Coding\FCL\newfcl\fcl\vsbuild\src\CMakeFiles\generate.stamp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">F:\Coding\FCL\newfcl\fcl\vsbuild\src\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">Building Custom Rule F:/Coding/FCL/newfcl/fcl/src/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule F:/Coding/FCL/newfcl/fcl/src/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -HF:/Coding/FCL/newfcl/fcl -BF:/Coding/FCL/newfcl/fcl/vsbuild --check-stamp-file F:\Coding\FCL\newfcl\fcl\vsbuild\src\CMakeFiles\generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -HF:/Coding/FCL/newfcl/fcl -BF:/Coding/FCL/newfcl/fcl/vsbuild --check-stamp-file F:\Coding\FCL\newfcl\fcl\vsbuild\src\CMakeFiles\generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">F:/Coding/FCL/newfcl/fcl/src/CMakeLists.txt;F:\Coding\FCL\newfcl\fcl\src\CMakeLists.txt;F:\Coding\FCL\newfcl\fcl\src\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">F:/Coding/FCL/newfcl/fcl/src/CMakeLists.txt;F:\Coding\FCL\newfcl\fcl\src\CMakeLists.txt;F:\Coding\FCL\newfcl\fcl\src\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">F:\Coding\FCL\newfcl\fcl\vsbuild\src\CMakeFiles\generate.stamp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">F:\Coding\FCL\newfcl\fcl\vsbuild\src\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\BV\AABB.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\BV\BV.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\BV\BV_node.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\BV\OBB.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\BV\OBBRSS.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\BV\RSS.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\BV\kDOP.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\BV\kIOS.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\BVH\BVH_front.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\BVH\BVH_internal.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\BVH\BVH_model.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\BVH\BVH_utility.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\BVH\BV_fitter.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\BVH\BV_splitter.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\articulated_model\joint.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\articulated_model\joint_config.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\articulated_model\link.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\articulated_model\model.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\articulated_model\model_config.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\broadphase\broadphase.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\broadphase\broadphase_SSaP.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\broadphase\broadphase_SaP.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\broadphase\broadphase_bruteforce.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\broadphase\broadphase_dynamic_AABB_tree.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\broadphase\broadphase_dynamic_AABB_tree_array.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\broadphase\broadphase_interval_tree.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\broadphase\broadphase_spatialhash.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\broadphase\hash.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\broadphase\hierarchy_tree.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\broadphase\interval_tree.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\broadphase\morton.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\ccd\conservative_advancement.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\ccd\interpolation\interpolation.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\ccd\interpolation\interpolation_factory.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\ccd\interpolation\interpolation_linear.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\ccd\interval.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\ccd\interval_matrix.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\ccd\interval_vector.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\ccd\motion.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\ccd\motion_base.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\ccd\simplex.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\ccd\support.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\ccd\taylor_matrix.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\ccd\taylor_model.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\ccd\taylor_vector.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\collision.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\collision_data.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\collision_func_matrix.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\collision_node.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\collision_object.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\continuous_collision.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\data_types.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\deprecated.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\distance.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\distance_func_matrix.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\exception.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\intersect.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\learning\classifier.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\math\constants.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\math\math_details.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\math\matrix_3f.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\math\sampling.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\math\transform.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\math\vec_3f.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\math\vec_nf.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\narrowphase\gjk.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\narrowphase\gjk_libccd.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\narrowphase\narrowphase.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\octree.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\profile.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\shape\geometric_shape_to_BVH_model.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\shape\geometric_shapes.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\shape\geometric_shapes_utility.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\simd\math_simd_details.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\simd\simd_intersect.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\traversal\traversal_node_base.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\traversal\traversal_node_bvh_shape.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\traversal\traversal_node_bvhs.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\traversal\traversal_node_octree.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\traversal\traversal_node_setup.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\traversal\traversal_node_shapes.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\traversal\traversal_recurse.h" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\broadphase\broadphase_spatialhash.hxx" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\include\fcl\broadphase\hierarchy_tree.hxx" />
+    <ClInclude Include="F:\Coding\FCL\newfcl\fcl\vsbuild\include\fcl\config.h" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\BV\AABB.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\BV\OBB.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\BV\OBBRSS.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\BV\RSS.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\BV\kDOP.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\BV\kIOS.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\BVH\BVH_model.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\BVH\BVH_utility.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\BVH\BV_fitter.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\BVH\BV_splitter.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\articulated_model\joint.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\articulated_model\joint_config.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\articulated_model\link.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\articulated_model\model.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\articulated_model\model_config.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\broadphase\broadphase_SSaP.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\broadphase\broadphase_SaP.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\broadphase\broadphase_bruteforce.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\broadphase\broadphase_dynamic_AABB_tree.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\broadphase\broadphase_dynamic_AABB_tree_array.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\broadphase\broadphase_interval_tree.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\broadphase\broadphase_spatialhash.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\broadphase\hierarchy_tree.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\broadphase\interval_tree.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\ccd\conservative_advancement.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\ccd\interpolation\interpolation.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\ccd\interpolation\interpolation_factory.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\ccd\interpolation\interpolation_linear.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\ccd\interval.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\ccd\interval_matrix.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\ccd\interval_vector.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\ccd\motion.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\ccd\taylor_matrix.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\ccd\taylor_model.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\ccd\taylor_vector.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\collision.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\collision_data.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\collision_func_matrix.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\collision_node.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\continuous_collision.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\distance.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\distance_func_matrix.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\intersect.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\math\sampling.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\math\transform.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\narrowphase\gjk.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\narrowphase\gjk_libccd.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\narrowphase\narrowphase.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\profile.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\shape\geometric_shapes.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\shape\geometric_shapes_utility.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\traversal\traversal_node_base.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\traversal\traversal_node_bvhs.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\traversal\traversal_node_setup.cpp" />
+    <ClCompile Include="F:\Coding\FCL\newfcl\fcl\src\traversal\traversal_recurse.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
