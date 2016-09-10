@@ -1089,6 +1089,12 @@ bool GJKSolver_indep::shapeTriangleDistance<Sphere>(const Sphere& s, const Trans
                                                     FCL_REAL* dist, Vec3f* p1, Vec3f* p2) const;
 
 template<>
+bool GJKSolver_indep::shapeIntersect<SuperOvoid, SuperOvoid>(
+    const SuperOvoid& s1, const Transform3f& tf1,
+    const SuperOvoid& s2, const Transform3f& tf2,
+    std::vector<ContactPoint>* contacts) const;
+
+template<>
 bool GJKSolver_indep::shapeDistance<SuperOvoid, SuperOvoid>(
     const SuperOvoid& s1, const Transform3f& tf1,
     const SuperOvoid& s2, const Transform3f& tf2,

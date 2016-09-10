@@ -3575,6 +3575,29 @@ bool GJKSolver_indep::shapeTriangleDistance<Sphere>(const Sphere& s, const Trans
 }
 
 template<>
+bool GJKSolver_indep::shapeIntersect<SuperOvoid, SuperOvoid>(
+    const SuperOvoid& s1, const Transform3f& tf1,
+    const SuperOvoid& s2, const Transform3f& tf2,
+    std::vector<ContactPoint>* contacts) const
+{
+    FCL_REAL distance; // If the superovoids intersect, this will be negative, but penetration_depth is positive
+    Vec3f p1, p2;
+
+    bool intersect = !details::superOvoidSuperOvoidDistance(s1, tf1, s2, tf2, &distance, &p1, &p2, true, NULL);
+
+    if (contacts)
+    {
+        ContactPoint p;
+        p.pos = (p1 + p2) / 2;
+        p.penetration_depth = -distance;
+        p.normal = (p2 - p1).normalize();
+        contacts->push_back(p);
+    }
+
+    return intersect;
+}
+
+template<>
 bool GJKSolver_indep::shapeDistance<SuperOvoid, SuperOvoid>(
     const SuperOvoid& s1, const Transform3f& tf1,
     const SuperOvoid& s2, const Transform3f& tf2,
