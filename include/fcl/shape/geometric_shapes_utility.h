@@ -41,6 +41,7 @@
 
 #include <vector>
 #include "fcl/shape/geometric_shapes.h"
+#include "fcl/shape/superovoid.h"
 #include "fcl/BV/BV.h"
 
 namespace fcl
@@ -53,6 +54,7 @@ namespace details
 std::vector<Vec3f> getBoundVertices(const Box& box, const Transform3f& tf);
 std::vector<Vec3f> getBoundVertices(const Sphere& sphere, const Transform3f& tf);
 std::vector<Vec3f> getBoundVertices(const Ellipsoid& ellipsoid, const Transform3f& tf);
+std::vector<Vec3f> getBoundVertices(const SuperOvoid& ellipsoid, const Transform3f& tf);
 std::vector<Vec3f> getBoundVertices(const Capsule& capsule, const Transform3f& tf);
 std::vector<Vec3f> getBoundVertices(const Cone& cone, const Transform3f& tf);
 std::vector<Vec3f> getBoundVertices(const Cylinder& cylinder, const Transform3f& tf);

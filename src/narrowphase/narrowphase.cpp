@@ -36,9 +36,12 @@
 /** \author Jia Pan */
 
 #include "fcl/narrowphase/narrowphase.h"
+#include "fcl/shape/superovoid_details.h"
 #include "fcl/shape/geometric_shapes_utility.h"
 #include "fcl/intersect.h"
 #include <vector>
+
+#include "lapacke.h"
 
 namespace fcl
 {
@@ -3569,6 +3572,15 @@ bool GJKSolver_indep::shapeTriangleDistance<Sphere>(const Sphere& s, const Trans
                                                     FCL_REAL* dist, Vec3f* p1, Vec3f* p2) const
 {
   return details::sphereTriangleDistance(s, tf1, P1, P2, P3, tf2, dist, p1, p2);
+}
+
+template<>
+bool GJKSolver_indep::shapeDistance<SuperOvoid, SuperOvoid>(
+    const SuperOvoid& s1, const Transform3f& tf1,
+    const SuperOvoid& s2, const Transform3f& tf2,
+    FCL_REAL* dist, Vec3f* p1, Vec3f* p2) const
+{
+    return details::superOvoidSuperOvoidDistance(s1, tf1, s2, tf2, dist, p1, p2, false, NULL);
 }
 
 } // fcl

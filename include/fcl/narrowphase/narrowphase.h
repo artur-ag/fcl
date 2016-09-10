@@ -40,6 +40,7 @@
 
 #include <algorithm>
 
+#include "fcl/shape/superovoid.h"
 #include "fcl/collision_data.h"
 #include "fcl/narrowphase/gjk.h"
 #include "fcl/narrowphase/gjk_libccd.h"
@@ -1086,6 +1087,12 @@ template<>
 bool GJKSolver_indep::shapeTriangleDistance<Sphere>(const Sphere& s, const Transform3f& tf1,
                                                     const Vec3f& P1, const Vec3f& P2, const Vec3f& P3, const Transform3f& tf2,
                                                     FCL_REAL* dist, Vec3f* p1, Vec3f* p2) const;
+
+template<>
+bool GJKSolver_indep::shapeDistance<SuperOvoid, SuperOvoid>(
+    const SuperOvoid& s1, const Transform3f& tf1,
+    const SuperOvoid& s2, const Transform3f& tf2,
+    FCL_REAL* dist, Vec3f* p1, Vec3f* p2) const;
 
 }
 

@@ -126,6 +126,24 @@ std::vector<Vec3f> getBoundVertices(const Ellipsoid& ellipsoid, const Transform3
   return result;
 }
 
+std::vector<Vec3f> getBoundVertices(const SuperOvoid& superovoid, const Transform3f& tf)
+{
+    std::vector<Vec3f> result(8);
+    FCL_REAL a = superovoid.aabb_local.width();
+    FCL_REAL b = superovoid.aabb_local.height();
+    FCL_REAL c = superovoid.aabb_local.depth();
+    result[0] = tf.transform(Vec3f(a, b, c));
+    result[1] = tf.transform(Vec3f(a, b, -c));
+    result[2] = tf.transform(Vec3f(a, -b, c));
+    result[3] = tf.transform(Vec3f(a, -b, -c));
+    result[4] = tf.transform(Vec3f(-a, b, c));
+    result[5] = tf.transform(Vec3f(-a, b, -c));
+    result[6] = tf.transform(Vec3f(-a, -b, c));
+    result[7] = tf.transform(Vec3f(-a, -b, -c));
+
+    return result;
+}
+
 std::vector<Vec3f> getBoundVertices(const Capsule& capsule, const Transform3f& tf)
 {
   std::vector<Vec3f> result(36);

@@ -325,6 +325,8 @@ DistanceFunctionMatrix<NarrowPhaseSolver>::DistanceFunctionMatrix()
   distance_matrix[GEOM_ELLIPSOID][GEOM_PLANE] = &ShapeShapeDistance<Ellipsoid, Plane, NarrowPhaseSolver>;
   distance_matrix[GEOM_ELLIPSOID][GEOM_HALFSPACE] = &ShapeShapeDistance<Ellipsoid, Halfspace, NarrowPhaseSolver>;
 
+  distance_matrix[GEOM_SUPEROVOID][GEOM_SUPEROVOID] = &ShapeShapeDistance<SuperOvoid, SuperOvoid, NarrowPhaseSolver>;
+
   distance_matrix[GEOM_CAPSULE][GEOM_BOX] = &ShapeShapeDistance<Capsule, Box, NarrowPhaseSolver>;
   distance_matrix[GEOM_CAPSULE][GEOM_SPHERE] = &ShapeShapeDistance<Capsule, Sphere, NarrowPhaseSolver>;
   distance_matrix[GEOM_CAPSULE][GEOM_ELLIPSOID] = &ShapeShapeDistance<Capsule, Ellipsoid, NarrowPhaseSolver>;
