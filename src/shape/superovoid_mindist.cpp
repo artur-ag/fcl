@@ -258,11 +258,14 @@ namespace fcl
             //    const_cast<SuperOvoid*>(&s2)->setCachedPoint(&s1, Vec3f(qk[2], qk[3], 0));
             //}
 
-            // Save stats as a global variable, for benchmarks
+            // Also save output to global variable stats
             if (stats != NULL)
             {
-                g_lastStatsValid = true;
-                g_lastStats = *stats;
+                for (int i = 0; i < 3; i++)
+                {
+                    stats->outA[i] = globalPi[i];
+                    stats->outB[i] = globalPj[i];
+                }
             }
 
             // Output values
@@ -279,7 +282,19 @@ namespace fcl
 
             totalTimer.stop();
             if (stats != NULL)
+            {
                 stats->totalTime = totalTimer.getElapsedTimeInMicroSec();
+                stats->dist = distance * (intersecting ? -1 : 1);
+            }
+
+            // Save stats as a global variable, for benchmarks
+            if (stats != NULL)
+            {
+                g_lastStatsValid = true;
+                g_lastStats = *stats;
+
+                g_stats.push_back(NewtonRaphsonStats(*stats));
+            }
 
             return !intersecting;
         }

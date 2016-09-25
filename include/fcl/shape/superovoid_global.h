@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fcl/data_types.h>
 #include <fcl/math/vec_3f.h>
+#include <vector>
 
 #ifdef _WIN32
 #define NOMINMAX  // required to avoid compilation errors with Visual Studio 2010
@@ -80,6 +81,13 @@ namespace fcl
 		FCL_REAL outParamsA[2];
 		FCL_REAL outParamsB[2];
 
+        // Final result in x,y,z
+        FCL_REAL outA[3];
+        FCL_REAL outB[3];
+
+        // Signed distance between outA and outB (if negative, interpenetration is occurring)
+        FCL_REAL dist;
+
 		void resetToDefault();
 		void clearOutputs();
 		void add(const NewtonRaphsonStats& other);
@@ -93,6 +101,16 @@ namespace fcl
         Vec3f getGuessB() const
         {
             return Vec3f(guessB[0], guessB[1], guessB[2]);
+        }
+
+        Vec3f getOutA() const
+        {
+            return Vec3f(outA[0], outA[1], outA[2]);
+        }
+
+        Vec3f getOutB() const
+        {
+            return Vec3f(outB[0], outB[1], outB[2]);
         }
 		
         void print(std::ostream &stream)
@@ -117,6 +135,8 @@ namespace fcl
 	extern bool g_lastStatsValid;
 	extern NewtonRaphsonStats g_lastStats;
     extern int g_superovoidQueries;
+    
+    extern std::vector<NewtonRaphsonStats> g_stats;
 }
 
 #endif

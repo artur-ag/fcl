@@ -1,11 +1,14 @@
 #include <fcl/shape/superovoid_global.h>
 #include <cstring>
+#include <vector>
 
 namespace fcl
 {
 	bool g_lastStatsValid = false;
 	NewtonRaphsonStats g_lastStats;
     int g_superovoidQueries;
+
+    std::vector<NewtonRaphsonStats> g_stats;
 
 	void NewtonRaphsonStats::resetToDefault()
 	{
@@ -36,11 +39,14 @@ namespace fcl
 		nonMinimumDistance = 0;
 		discardedGuess = 0;
 		didNotConverge = 0;
+        dist = 0;
 
 		for (int i = 0; i < 3; i++)
 		{
 			guessA[i] = 0;
 			guessB[i] = 0;
+            outA[i] = 0;
+            outB[i] = 0;
 		}
 
 		for (int i = 0; i < 2; i++)
@@ -104,7 +110,10 @@ namespace fcl
 			"discardedGuess," <<
 			"didNotConverge," <<
 			"guessA," <<
-			"guessB";
+            "guessB," <<
+            "outA," <<
+			"outB," <<
+            "signedDistance";
 	}
 
 	// Writes NewtonRaphsonStats data in CSV format
@@ -133,7 +142,10 @@ namespace fcl
 			s.discardedGuess << "," <<
 			s.didNotConverge << "," <<
 			s.getGuessA() << "," <<
-			s.getGuessB();
+            s.getGuessB() << "," <<
+            s.getOutA() << "," <<
+			s.getOutB() << "," <<
+            s.dist;
 
 		return out;
 	}
