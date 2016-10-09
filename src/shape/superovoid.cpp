@@ -351,4 +351,38 @@ namespace fcl
 
 		return dT.cross(b) + t.cross(dB);
 	}
+
+    // Related to minimum distance query cached results
+    // From SuperOvoid.h
+    void SuperOvoid::setCachedPoint(const SuperOvoid* other, Vec3f point)
+    {
+        // Clear the previous cached point for this pair of SuperOvoids, and add the new one
+        cachedGuesses.erase(other);
+        cachedGuesses.emplace(other, point);
+    }
+
+    void SuperOvoid::clearCachedPoint(const SuperOvoid* other)
+    {
+        cachedGuesses.erase(other);
+    }
+
+    void SuperOvoid::clearCachedPoints()
+    {
+        cachedGuesses.clear();
+    }
+
+    Vec3f SuperOvoid::getCachedPoint(const SuperOvoid* other) const
+    {
+        std::unordered_map<const SuperOvoid*, Vec3f>::const_iterator t = cachedGuesses.find(other);
+
+        if (t != cachedGuesses.end())
+            return t->second;
+        else
+            return Vec3f();
+    }
+
+    bool SuperOvoid::isCachedPointValid(const SuperOvoid* other) const
+    {
+        return (cachedGuesses.find(other) != cachedGuesses.end());
+    }
 }

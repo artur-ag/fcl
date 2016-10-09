@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
+#include <unordered_map>
 
 #include "fcl/shape/geometric_shapes.h"
 #include "fcl/math/constants.h"
@@ -90,6 +91,17 @@ namespace fcl
 		Vec3f getNormalDerivativePhi1(FCL_REAL phi1, FCL_REAL phi2) const;
 		Vec3f getNormalDerivativePhi2(FCL_REAL phi1, FCL_REAL phi2) const;
 		
+
+        // Related to previous minimum distance points, to be used as initial iterations of future minimum distance queries
+    private:
+        std::unordered_map<const SuperOvoid*, Vec3f> cachedGuesses;
+    public:
+        void setCachedPoint(const SuperOvoid* other, Vec3f point);
+        void clearCachedPoint(const SuperOvoid* other);
+        void clearCachedPoints();
+        Vec3f getCachedPoint(const SuperOvoid* other) const;
+        bool isCachedPointValid(const SuperOvoid* other) const;
+
 		/// @brief Get node type
 		NODE_TYPE getNodeType() const { return GEOM_SUPEROVOID; }
 

@@ -75,7 +75,7 @@ namespace fcl
 
             // If the requested query was for collision,
             // we can run some broad-phase algs to avoid useless work
-            if (collisionQuery)
+            if (collisionQuery || false)
             {
                 // Simple sphere-sphere intersection
                 if (s1.aabb_radius * s1.aabb_radius + s2.aabb_radius * s2.aabb_radius
@@ -125,6 +125,8 @@ namespace fcl
             //        const_cast<SuperOvoid*>(&s2)->toSuperovoid();
             //    }
             //}
+            if (stats != NULL)
+                stats->superellipsoid = false;
 
             bool useParametric = false;
             if (stats != NULL)
@@ -139,7 +141,7 @@ namespace fcl
 
             // Initial guess, in local coords
             FCL_REAL qk[6];
-            bool useCachedGuesses = false; // (s1.isCachedPointValid(&s2) && s2.isCachedPointValid(&s1));
+            bool useCachedGuesses = (s1.isCachedPointValid(&s2) && s2.isCachedPointValid(&s1));
 
             if (!useParametric)
             {
@@ -147,14 +149,14 @@ namespace fcl
                 {
                     getInitialGuess(s1, tf1, s2, tf2, qk, stats, useParametric);
                 }
-                //else // if (useCachedGuesses)
-                //{
-                //    // Use the given initial guess: convert global to local coords
-                //    Vec3f localP = Transform3f(tf1).inverse().transform(s1.getCachedPoint(&s2));
-                //    Vec3f localQ = Transform3f(tf2).inverse().transform(s2.getCachedPoint(&s1));
-                //    qk[0] = localP[0]; qk[1] = localP[1]; qk[2] = localP[2];
-                //    qk[3] = localQ[0]; qk[4] = localQ[1]; qk[5] = localQ[2];
-                //}
+                else // if (useCachedGuesses)
+                {
+                    // Use the given initial guess: convert global to local coords
+                    Vec3f localP = Transform3f(tf1).inverse().transform(s1.getCachedPoint(&s2));
+                    Vec3f localQ = Transform3f(tf2).inverse().transform(s2.getCachedPoint(&s1));
+                    qk[0] = localP[0]; qk[1] = localP[1]; qk[2] = localP[2];
+                    qk[3] = localQ[0]; qk[4] = localQ[1]; qk[5] = localQ[2];
+                }
             }
             else // if (useParametric)
             {
@@ -162,13 +164,13 @@ namespace fcl
                 {
                     getInitialGuess(s1, tf1, s2, tf2, qk, stats, useParametric);
                 }
-                //else // if (useCachedGuesses)
-                //{
-                //    qk[0] = s1.getCachedPoint(&s2)[0];
-                //    qk[1] = s1.getCachedPoint(&s2)[1];
-                //    qk[2] = s2.getCachedPoint(&s1)[0];
-                //    qk[3] = s2.getCachedPoint(&s1)[1];;
-                //}
+                else // if (useCachedGuesses)
+                {
+                    qk[0] = s1.getCachedPoint(&s2)[0];
+                    qk[1] = s1.getCachedPoint(&s2)[1];
+                    qk[2] = s2.getCachedPoint(&s1)[0];
+                    qk[3] = s2.getCachedPoint(&s1)[1];;
+                }
             }
 
             FCL_REAL tolerance = 1e-6;
@@ -246,17 +248,17 @@ namespace fcl
                 globalPj = tf2.transform(localPj);
             }
 
-            //// Save solution as initial guess for future queries
-            //if (!useParametric)
-            //{
-            //    const_cast<SuperOvoid*>(&s1)->setCachedPoint(&s2, globalPi);
-            //    const_cast<SuperOvoid*>(&s2)->setCachedPoint(&s1, globalPj);
-            //}
-            //else // if (useParametric)
-            //{
-            //    const_cast<SuperOvoid*>(&s1)->setCachedPoint(&s2, Vec3f(qk[0], qk[1], 0));
-            //    const_cast<SuperOvoid*>(&s2)->setCachedPoint(&s1, Vec3f(qk[2], qk[3], 0));
-            //}
+            // Save solution as initial guess for future queries
+            if (!useParametric)
+            {
+                const_cast<SuperOvoid*>(&s1)->setCachedPoint(&s2, globalPi);
+                const_cast<SuperOvoid*>(&s2)->setCachedPoint(&s1, globalPj);
+            }
+            else // if (useParametric)
+            {
+                const_cast<SuperOvoid*>(&s1)->setCachedPoint(&s2, Vec3f(qk[0], qk[1], 0));
+                const_cast<SuperOvoid*>(&s2)->setCachedPoint(&s1, Vec3f(qk[2], qk[3], 0));
+            }
 
             // Also save output to global variable stats
             if (stats != NULL)
