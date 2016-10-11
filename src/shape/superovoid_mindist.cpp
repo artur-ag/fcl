@@ -1056,7 +1056,7 @@ namespace fcl
 
                                             //cost = constraintsSqr + (minDistFactorP * minDistFactorP) + (minDistFactorQ * minDistFactorQ);
 
-                        if (cost < best || isnan(best))
+                        if (cost < best || std::isnan(best))
                         {
                             best = cost;
                             bestA = paramsA;
